@@ -1,0 +1,24 @@
+# Django
+*.pyc
+__pycache__/
+db.sqlite3
+*.log
+
+# Large media files (keep advertisement videos)
+media/payment_proofs/
+media/profile_pics/*.jpg
+media/profile_pics/*.jpeg
+media/profile_pics/*.png
+!media/profile_pics/Advertisement*.mp4
+!media/profile_pics/logo*.png
+
+# Environment variables
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
