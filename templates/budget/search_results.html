@@ -1,0 +1,148 @@
+{% extends 'budget/base.html' %}
+{% load budget_filters %}
+
+{% block title %}Search Results - Payflow{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h4>Search Results for "{{ query }}"</h4>
+                    <p class="text-muted">{{ total_results }} result{{ total_results|pluralize }} found</p>
+                </div>
+                <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+
+            {% if total_results > 0 %}
+                <!-- Categories Section -->
+                {% if categories %}
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-tag"></i> Categories ({{ categories.count }})</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            {% for category in categories %}
+                            <div class="col-md-6 col-lg-4 mb-3">
+                                <div class="card h-100 category-search-card" onclick="window.location.href='{% url 'category_detail' category.id %}'">
+                                    <div class="card-body">
+                                        <h6 class="card-title">{{ category.name }}</h6>
+                                        <p class="card-text">
+                                            <strong>₱{{ category.amount|accurate_amount }}</strong><br>
+                                            <small class="text-muted">{{ category.get_category_type_display }}</small><br>
+                                            <small class="text-muted">Due: {{ category.due_date|date:"M d, Y" }}</small>
+                                        </p>
+                                        {% if category.payment_status == 'paid' %}
+                                            <span class="badge bg-success">Paid</span>
+                                        {% else %}
+                                            {% if category.is_overdue %}
+                                                <span class="badge bg-danger">Overdue</span>
+                                            {% elif category.is_due_soon %}
+                                                <span class="badge bg-warning text-dark">Due Soon</span>
+                                            {% else %}
+                                                <span class="badge bg-secondary">Unpaid</span>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Transactions Section -->
+                {% if transactions %}
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-exchange-alt"></i> Transactions ({{ transactions.count }})</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group">
+                            {% for transaction in transactions %}
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1">{{ transaction.title }}</h6>
+                                        <p class="mb-1">{{ transaction.description|truncatewords:15 }}</p>
+                                        <small class="text-muted">
+                                            {{ transaction.date|date:"M d, Y" }}
+                                            {% if transaction.category %}
+                                                • {{ transaction.category.name }}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                    <div class="text-end">
+                                        <span class="fw-bold {% if transaction.transaction_type == 'income' %}text-success{% else %}text-danger{% endif %}">
+                                            {% if transaction.transaction_type == 'income' %}+{% else %}-{% endif %}₱{{ transaction.amount|accurate_amount }}
+                                        </span>
+                                        <br>
+                                        <span class="badge {% if transaction.transaction_type == 'income' %}bg-success{% else %}bg-primary{% endif %}">
+                                            {{ transaction.transaction_type|title }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Payments Section -->
+                {% if payments %}
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-money-bill-wave"></i> Payments ({{ payments.count }})</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group">
+                            {% for payment in payments %}
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1">Payment for {{ payment.category.name }}</h6>
+                                        <p class="mb-1">{{ payment.payment_method|title }} Payment</p>
+                                        <small class="text-muted">{{ payment.payment_date|date:"M d, Y" }}</small>
+                                    </div>
+                                    <div class="text-end">
+                                        <span class="fw-bold text-success">₱{{ payment.amount_paid|accurate_amount }}</span>
+                                        <br>
+                                        <span class="badge bg-success">{{ payment.payment_type|title }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                    <h5>No results found</h5>
+                    <p class="text-muted">Try searching with different keywords or check your spelling.</p>
+                    <a href="{% url 'home' %}" class="btn btn-primary">Go Back to Home</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+.category-search-card {
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.category-search-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+</style>
+{% endblock %}

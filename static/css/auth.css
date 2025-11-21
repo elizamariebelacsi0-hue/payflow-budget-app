@@ -1,0 +1,308 @@
+
+:root {
+    --primary: #f07ea8;
+    --deep: #e56796;
+    --pale: #fdeef3;
+    --card: #ffffff;
+    
+    --blue-strong: #2b84d1;
+    --blue-text: #1f71a1;
+    --green-strong: #2d8659;
+    --green-text: #1e7e5e;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #4b1532;
+    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: url("/media/profile_pics/bg2.jpg") no-repeat center center fixed;
+    background-size: cover;
+    filter: blur(6px);
+    z-index: -2;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(253, 230, 238, 0.6);
+    z-index: -1;
+}
+
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.auth-card {
+    background: var(--card);
+    border-radius: 24px;
+    padding: 40px 30px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 20px 60px rgba(233, 79, 154, 0.15);
+    position: relative;
+    z-index: 1;
+    animation: slideUp 0.5s ease-out;
+}
+
+/* Register page wider card */
+.register-card {
+    max-width: 650px;
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    margin-bottom: 2rem;
+}
+
+.auth-logo img {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 8px 18px rgba(233, 79, 154, 0.25);
+}
+
+.auth-logo span {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--deep);
+}
+
+.form-label {
+    color: var(--deep);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
+
+.form-control {
+    border-radius: 10px;
+    border: 2px solid var(--pale);
+    padding: 12px 15px;
+    text-align: left;
+    width: 100%;
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.2rem rgba(233, 79, 154, 0.25);
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, var(--primary), var(--deep));
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(233, 79, 154, 0.4);
+}
+
+.btn-secondary {
+    background: #ebeef1;
+    color: var(--primary);
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: #dfe3e6;
+    color: var(--deep);
+    transform: translateY(-2px);
+}
+
+.alert {
+    border-radius: 10px;
+    border: none;
+}
+
+.alert-danger {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--deep);
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes slideUp {
+    0% {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+/* Blue Theme */
+.blue-theme {
+    background: linear-gradient(135deg, #F0F8FF 0%, #e6f2ff 100%) !important;
+}
+
+.blue-theme::after {
+    background: rgba(240, 248, 255, 0.85) !important;
+}
+
+.blue-theme .auth-card {
+    background: #ffffff !important;
+    box-shadow: 0 20px 60px rgba(43, 132, 209, 0.2) !important;
+}
+
+.blue-theme .auth-logo span {
+    color: var(--blue-strong) !important;
+}
+
+.blue-theme h4 {
+    color: var(--blue-text) !important;
+}
+
+.blue-theme .form-label {
+    color: var(--blue-text) !important;
+}
+
+.blue-theme .form-control {
+    border-color: var(--blue-strong) !important;
+}
+
+.blue-theme .form-control:focus {
+    border-color: var(--blue-strong) !important;
+    box-shadow: 0 0 0 0.2rem rgba(43, 132, 209, 0.25) !important;
+}
+
+.blue-theme .btn-primary {
+    background: linear-gradient(45deg, var(--blue-strong), #2b6cb0) !important;
+}
+
+.blue-theme .btn-secondary {
+    background: rgba(43, 132, 209, 0.12) !important;
+    color: var(--blue-strong) !important;
+}
+
+.blue-theme .btn-secondary:hover {
+    background: rgba(43, 132, 209, 0.18) !important;
+    color: var(--blue-strong) !important;
+}
+
+.blue-theme a {
+    color: var(--blue-strong) !important;
+}
+
+/* Green Theme */
+.green-theme {
+    background: linear-gradient(135deg, #F0F9F4 0%, #e8f5ed 100%) !important;
+}
+
+.green-theme::after {
+    background: rgba(240, 249, 244, 0.85) !important;
+}
+
+.green-theme .auth-card {
+    background: #ffffff !important;
+    box-shadow: 0 20px 60px rgba(52, 167, 114, 0.2) !important;
+}
+
+.green-theme .auth-logo span {
+    color: var(--green-strong) !important;
+}
+
+.green-theme h4 {
+    color: var(--green-text) !important;
+}
+
+.green-theme .form-label {
+    color: var(--green-text) !important;
+}
+
+.green-theme .form-control {
+    border-color: var(--green-strong) !important;
+}
+
+.green-theme .form-control:focus {
+    border-color: var(--green-strong) !important;
+    box-shadow: 0 0 0 0.2rem rgba(52, 167, 114, 0.25) !important;
+}
+
+.green-theme .btn-primary {
+    background: linear-gradient(45deg, var(--green-strong), #34a772) !important;
+}
+
+.green-theme .btn-secondary {
+    background: rgba(52, 167, 114, 0.12) !important;
+    color: var(--green-strong) !important;
+}
+
+.green-theme .btn-secondary:hover {
+    background: rgba(52, 167, 114, 0.18) !important;
+    color: var(--green-strong) !important;
+}
+
+.green-theme a {
+    color: var(--green-strong) !important;
+}
+
+/* Icon Theming */
+.dark-mode i, .dark-mode .fa {
+    color: #3182ce !important;
+}
+
+.blue-theme i, .blue-theme .fa {
+    color: var(--blue-strong) !important;
+}
+
+.green-theme i, .green-theme .fa {
+    color: var(--green-strong) !important;
+}

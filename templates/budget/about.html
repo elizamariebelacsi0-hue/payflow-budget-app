@@ -1,0 +1,65 @@
+{% extends 'budget/base.html' %}
+{% load static %}
+
+{% block title %}About - Payflow{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-info-circle"></i> About Payflow</h2>
+                </div>
+                <div class="card-body">
+                    <p>Payflow is a comprehensive budget management application that helps users track their monthly expenses and payment categories with smart reminders and notifications.</p>
+                    
+                    <h4>Key Features:</h4>
+                    <ul>
+                        <li>Real-time payment notifications</li>
+                        <li>Monthly budget tracking</li>
+                        <li>Expense categorization</li>
+                        <li>Payment scheduling</li>
+                        <li>Transaction history</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Logo & Ads Corner Section -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h3><i class="fas fa-bullhorn"></i> Logo & Ads Corner</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Logo Section -->
+                        <div class="col-md-4 text-center mb-3">
+                            <h5>Our Logo</h5>
+                            <img src="/media/profile_pics/logo (2) (2).png" alt="Payflow Logo" class="logo-display">
+                        </div>
+                        
+                        <!-- Poster Section -->
+                        <div class="col-md-4 text-center mb-3">
+                            <h5>Featured Poster</h5>
+                            <img src="/media/profile_pics/poster (2) (1).png" alt="Payflow Poster" class="poster-display">
+                        </div>
+                        
+                        <!-- Advertisement Section -->
+                        <div class="col-md-4 text-center mb-3">
+                            <h5>Advertisement</h5>
+                            <video controls class="ad-video">
+                                <source src="/media/profile_pics/Advertisement.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

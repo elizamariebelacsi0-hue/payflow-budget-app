@@ -1,0 +1,26 @@
+{% extends 'budget/base.html' %}
+{% load static %}
+
+{% block title %}Featured Poster - Payflow{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h2><i class="fas fa-image"></i> Poster</h2>
+        </div>
+        <div class="card-body">
+            <p>The poster gives a quick look at how PayFlow works. It shows that the app helps users stay on budget through three simple steps: set your monthly budget, get reminders for bills, and make quick payments. The visuals highlight organized money management, and the message "All that in just one app!" shows that everything you need—tracking, reminders, and payments, is already included in PayFlow.</p>
+            
+            <div class="text-center mt-3">
+                <img src="/media/profile_pics/poster (2) (1).png" alt="Payflow Poster" class="img-fluid" style="max-width: 350px; border-radius: 15px; box-shadow: 0 8px 16px rgba(0,0,0,0.1);">
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-3">
+        <a href="{% url 'profile' %}" class="btn btn-primary">
+            <i class="fas fa-arrow-left"></i> Back to Profile
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,102 @@
+:root {
+    --admin-border: rgba(240, 126, 168, 0.2);
+}
+
+.admin-dashboard {
+    padding-bottom: 100px;
+}
+
+.admin-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(253, 93, 146, 0.12);
+}
+
+.admin-card h4 {
+    font-weight: 600;
+}
+
+.admin-table thead {
+    background: var(--pale-pink);
+    color: var(--primary-pink);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.admin-table thead th {
+    border: none;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+}
+
+.admin-table tbody tr {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.admin-table tbody td {
+    border-top: 1px solid var(--admin-border);
+    padding-top: 0.9rem;
+    padding-bottom: 0.9rem;
+}
+
+.admin-table tbody tr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(253, 93, 146, 0.08);
+}
+
+.role-badge {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.2rem 0.75rem;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
+.role-admin {
+    background: rgba(46, 139, 87, 0.12);
+    color: #2d8659;
+    border: 1px solid rgba(46, 139, 87, 0.3);
+}
+
+.role-user {
+    background: transparent;
+    color: #4a5568;
+    border: none;
+}
+
+.admin-table i {
+    color: var(--primary-pink);
+    font-size: 1.6rem;
+}
+
+.blue-theme .admin-card {
+    box-shadow: 0 10px 30px rgba(43, 108, 176, 0.12);
+}
+
+.blue-theme .admin-table thead {
+    background: rgba(43, 108, 176, 0.08);
+    color: var(--blue-strong);
+}
+
+.blue-theme .admin-table tbody td {
+    border-top-color: rgba(43, 108, 176, 0.15);
+}
+
+.green-theme .admin-card {
+    box-shadow: 0 10px 30px rgba(52, 167, 114, 0.12);
+}
+
+.green-theme .admin-table thead {
+    background: rgba(46, 139, 87, 0.08);
+    color: var(--green-strong);
+}
+
+.green-theme .admin-table tbody td {
+    border-top-color: rgba(46, 139, 87, 0.15);
+}
+

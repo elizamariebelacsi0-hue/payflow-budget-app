@@ -1,0 +1,334 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PayFlow Admin Dashboard - Manage users and system administration for the budget management platform.">
+    <meta name="keywords" content="payflow admin, budget management admin, user management">
+    <title>{% block title %}₱ayflow Admin{% endblock %}</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="icon" type="image/png" href="/media/profile_pics/logo.2.png">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand" href="{% url 'admin_dashboard' %}">
+                <div class="brand-container">
+                    <div class="logo-icon">
+                        <img src="{% get_media_prefix %}profile_pics/logo.1.png" alt="₱ayflow Logo" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
+                    </div>
+                    <span class="brand-text">₱ayflow</span>
+                </div>
+            </a>
+            <div class="navbar-nav ms-auto d-flex align-items-center">
+                <!-- Admin Search Bar -->
+                <div class="me-3 position-relative d-none d-md-block">
+                    <div class="input-group" style="width: 250px;">
+                        <input type="text" class="form-control form-control-sm" placeholder="Search..." id="adminSearchInput" style="border-radius: 20px 0 0 20px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: white;" onkeypress="if(event.key==='Enter') performAdminSearch()">
+                        <button class="btn btn-outline-light btn-sm" type="button" onclick="performAdminSearch()" style="border-radius: 0 20px 20px 0; border: 1px solid rgba(255,255,255,0.3);">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <!-- Admin Search Suggestions Dropdown -->
+                    <div id="adminSearchSuggestions" class="position-absolute" style="top: 100%; left: 0; right: 0; background: white; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 1000; display: none; max-height: 300px; overflow-y: auto;">
+                        <div id="adminSuggestionsList"></div>
+                    </div>
+                </div>
+                <button class="nav-link profile-nav-link" onclick="showAdminLogoutConfirmation()" title="Logout" style="background: none; border: none; color: inherit;">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    {% endif %}
+
+    <div class="main-content">
+        {% if messages %}
+        <div class="container mt-3">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    {% if user.is_authenticated %}
+    <nav class="bottom-nav">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-6">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'admin_dashboard' %}active{% endif %}" href="{% url 'admin_dashboard' %}">
+                        <i class="fas fa-users"></i>
+                        <div class="small">Payflow Users</div>
+                    </a>
+                </div>
+                <div class="col-6">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}" href="{% url 'profile' %}">
+                        <i class="fas fa-user-circle"></i>
+                        <div class="small">Profile</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Admin Search Modal -->
+    <div class="modal fade" id="adminSearchModal" tabindex="-1" aria-labelledby="adminSearchModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="adminSearchModalLabel">
+                        <i class="fas fa-search"></i> User Search Results
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="adminSearchModalContent">
+                    <!-- Search results will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Admin Logout Confirmation Modal -->
+    <div class="modal fade" id="adminLogoutModal" tabindex="-1" aria-labelledby="adminLogoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="adminLogoutModalLabel">
+                        <i class="fas fa-sign-out-alt"></i> Confirm Logout
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="fas fa-question-circle fa-3x theme-color mb-3"></i>
+                    <p>Are you sure you want to logout from your admin account?</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <a href="{% url 'login' %}" class="btn btn-danger">Yes</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Theme functionality
+        function detectTheme() {
+            const body = document.body;
+            if (body.classList.contains('blue-theme')) {
+                return 'blue';
+            } else if (body.classList.contains('green-theme')) {
+                return 'green';
+            }
+            return 'pink';
+        }
+        
+        function applyTheme(theme) {
+            const body = document.body;
+            body.classList.remove('pink-theme', 'blue-theme', 'green-theme');
+            body.classList.add(theme + '-theme');
+            localStorage.setItem('selectedTheme', theme);
+        }
+        
+        // Apply saved theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('selectedTheme') || 'pink';
+            applyTheme(savedTheme);
+        });
+        let adminSearchTimeout;
+        
+        function performAdminSearch() {
+            const searchInput = document.getElementById('adminSearchInput');
+            const query = searchInput.value.trim();
+            if (query) {
+                hideAdminSuggestions();
+                openAdminSearchModal(query);
+            }
+        }
+        
+        function openAdminSearchModal(query) {
+            const modal = new bootstrap.Modal(document.getElementById('adminSearchModal'));
+            const content = document.getElementById('adminSearchModalContent');
+            
+            content.innerHTML = '<div class="text-center py-4"><div class="spinner-border" role="status"></div></div>';
+            modal.show();
+            
+            fetch(`/admin-search-suggestions/?q=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    let html = `<h6 class="mb-3">Search Results for "${query}"</h6>`;
+                    
+                    if (data.results && data.results.length > 0) {
+                        html += '<div class="list-group">';
+                        data.results.forEach(result => {
+                            html += `
+                                <div class="list-group-item list-group-item-action" style="cursor: pointer;" onclick="navigateToAdminResult('${result.url || '/admin-dashboard/'}')">
+                                    <div class="d-flex align-items-center">
+                                        <i class="${result.icon} me-3 text-primary"></i>
+                                        <div>
+                                            <h6 class="mb-1">${result.name}</h6>
+                                            <small class="text-muted">${result.type} • ${result.details}</small>
+                                        </div>
+                                        <i class="fas fa-chevron-right ms-auto text-muted"></i>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        html += '</div>';
+                    } else {
+                        html += '<div class="text-center py-4"><i class="fas fa-search fa-2x text-muted mb-2"></i><p>No users found</p></div>';
+                    }
+                    
+                    content.innerHTML = html;
+                })
+                .catch(error => {
+                    content.innerHTML = '<div class="text-center py-4 text-danger">Error loading results</div>';
+                });
+        }
+        
+        function showAdminSuggestions(query) {
+            if (query.length < 1) {
+                hideAdminSuggestions();
+                return;
+            }
+            
+            // Show loading state
+            const suggestionsList = document.getElementById('adminSuggestionsList');
+            const suggestionsContainer = document.getElementById('adminSearchSuggestions');
+            suggestionsList.innerHTML = '<div class="p-2 text-center"><div class="spinner-border spinner-border-sm" role="status"></div> <span class="ms-2">Searching users...</span></div>';
+            suggestionsContainer.style.display = 'block';
+            
+            fetch(`/admin-search-suggestions/?q=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Add slight delay to show loading state
+                    setTimeout(() => {
+                        const suggestionsList = document.getElementById('adminSuggestionsList');
+                        const suggestionsContainer = document.getElementById('adminSearchSuggestions');
+                    
+                    if (data.results && data.results.length > 0) {
+                        suggestionsList.innerHTML = data.results.map(result => `
+                            <div class="suggestion-item p-2 border-bottom" style="cursor: pointer; color: #333;" onclick="selectAdminUser('${result.username}')" onmouseover="this.style.backgroundColor='#f8f9fa'" onmouseout="this.style.backgroundColor='white'">
+                                <div class="d-flex align-items-center">
+                                    <i class="${result.icon} me-2 text-primary"></i>
+                                    <div>
+                                        <div class="fw-bold">${result.name}</div>
+                                        <small class="text-muted">${result.type} • ${result.details}</small>
+                                    </div>
+                                    <i class="fas fa-chevron-right ms-auto text-muted"></i>
+                                </div>
+                            </div>
+                        `).join('');
+                        suggestionsContainer.style.display = 'block';
+                    } else {
+                        suggestionsList.innerHTML = '<div class="p-2 text-muted text-center">No users found</div>';
+                        suggestionsContainer.style.display = 'block';
+                    }
+                    }, 300); // 300ms delay to show loading
+                })
+                .catch(error => {
+                    console.error('Admin search error:', error);
+                    hideAdminSuggestions();
+                });
+        }
+        
+        function hideAdminSuggestions() {
+            document.getElementById('adminSearchSuggestions').style.display = 'none';
+        }
+        
+        function selectAdminUser(username) {
+            hideAdminSuggestions();
+            document.getElementById('adminSearchInput').value = '';
+            // Open search modal with the selected user
+            openAdminSearchModal(username);
+        }
+        
+        function navigateToAdminResult(url) {
+            // Close modal first
+            const modal = bootstrap.Modal.getInstance(document.getElementById('adminSearchModal'));
+            if (modal) {
+                modal.hide();
+            }
+            // Navigate after modal closes
+            setTimeout(() => {
+                window.location.href = url;
+            }, 300);
+        }
+        
+        function filterUsersOnPage(query) {
+            const userCards = document.querySelectorAll('.user-card, .list-group-item');
+            const lowerQuery = query.toLowerCase();
+            let visibleCount = 0;
+            
+            userCards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(lowerQuery)) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            const adminSearchInput = document.getElementById('adminSearchInput');
+            if (adminSearchInput) {
+                adminSearchInput.addEventListener('input', function() {
+                    clearTimeout(adminSearchTimeout);
+                    const query = this.value.trim();
+                    
+                    if (query === '') {
+                        hideAdminSuggestions();
+                        filterUsersOnPage(''); // Show all users
+                    } else {
+                        adminSearchTimeout = setTimeout(() => {
+                            showAdminSuggestions(query);
+                        }, 300);
+                    }
+                });
+                
+                adminSearchInput.addEventListener('focus', function() {
+                    const query = this.value.trim();
+                    if (query) {
+                        showAdminSuggestions(query);
+                    }
+                });
+            }
+            
+            // Hide suggestions when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.position-relative') && !e.target.closest('#adminSearchSuggestions')) {
+                    hideAdminSuggestions();
+                }
+            });
+        });
+        
+        function showAdminLogoutConfirmation() {
+            const modal = new bootstrap.Modal(document.getElementById('adminLogoutModal'));
+            modal.show();
+        }
+    </script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
+

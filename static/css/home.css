@@ -1,0 +1,960 @@
+/* Home Page Styles */
+.home-header {
+    background: white;
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 5px 20px rgba(255, 105, 180, 0.1);
+}
+
+.user-greeting {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.greeting-text h4 {
+    color: var(--dark-pink);
+    margin-bottom: 0.25rem;
+}
+
+.greeting-text p {
+    color: var(--primary-pink);
+    margin-bottom: 0;
+    font-weight: 500;
+}
+
+.logo-small {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.4rem;
+    color: var(--primary-pink);
+    font-weight: 600;
+}
+
+.logo-small img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.dashboard-card {
+    background: linear-gradient(135deg, var(--primary-pink), var(--dark-pink));
+    color: white;
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.dashboard-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.budget-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.budget-item {
+    text-align: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+}
+
+.budget-amount {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+.budget-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.categories-section {
+    background: white;
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 20px rgba(255, 105, 180, 0.1);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.section-title {
+    color: var(--dark-pink);
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.add-category-btn {
+    background: var(--primary-pink);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.add-category-btn:hover {
+    background: var(--dark-pink);
+    transform: translateY(-2px);
+}
+
+.unpaid-bills-btn {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.unpaid-bills-btn:hover {
+    background: #ff5252;
+    transform: translateY(-2px);
+    color: white;
+}
+
+.category-item {
+    background: white;
+    border-radius: 15px;
+    padding: 1rem;
+    border-left: 5px solid var(--primary-pink);
+    box-shadow: 0 2px 10px rgba(255, 105, 180, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    text-align: center;
+}
+
+.category-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 20px rgba(255, 105, 180, 0.2);
+}
+
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.category-name {
+    font-weight: bold;
+    color: var(--dark-pink);
+    margin-bottom: 0;
+}
+
+.category-amount {
+    font-weight: bold;
+    color: var(--primary-pink);
+    padding-right: 1%;
+}
+
+.category-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.due-date {
+    color: #ff4757;
+    font-weight: 500;
+}
+
+.due-soon {
+    background: #fff3cd;
+    border-left-color: #ffc107;
+}
+
+.overdue {
+    background: #f8d7da;
+    border-left-color: #dc3545;
+}
+
+.no-categories {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+.no-categories i {
+    font-size: 3rem;
+    color: var(--light-pink);
+    margin-bottom: 1rem;
+}
+
+.category-actions {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: flex;
+    gap: 0.25rem;
+}
+
+.category-action-btn {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 0.8rem;
+    padding: 0.25rem;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.category-action-btn:hover {
+    background: rgba(255, 105, 180, 0.1);
+    color: var(--primary-pink);
+}
+
+.category-action-btn.delete {
+    color: #dc3545;
+    padding-left: 30%;
+}
+
+.category-action-btn.delete:hover {
+    background: rgba(220, 53, 69, 0.1);
+}
+
+.back-btn {
+    background: var(--light-pink);
+    color: var(--dark-pink);
+    border: none;
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.back-btn:hover {
+    background: var(--primary-pink);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.header-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-direction: row;
+}
+
+.pay-btn {
+    background: var(--dark-pink);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 0.5rem 1.25rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+    order: 1;
+}
+
+.add-category-btn {
+    background: var(--primary-pink);
+    color: var(--white);
+    border: none;
+    border-radius: 25px;
+    padding: 0.5rem 1.25rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    order: 2;
+}
+
+.category-name-section {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.payment-status-btn-inline {
+    background: var(--primary-pink);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 0.2rem 0.5rem;
+    font-weight: 500;
+    font-size: 0.7rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    white-space: nowrap;
+}
+
+.payment-status-btn-inline:hover {
+    background: var(--primary-pink);
+    transform: translateY(-1px);
+}
+
+.payment-status-btn-inline.paid {
+    background: none;
+    color: var(--primary-pink);
+    padding: 0;
+    font-size: 0.9rem;
+}
+
+.payment-status-btn-inline.paid:hover {
+    background: none;
+    color: var(--primary-pink);
+    transform: none;
+}
+
+.payment-status-paid {
+    background-color: var(--primary-pink);
+    color: white;
+    border: none;
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.status-paid-icon {
+    color: var(--primary-pink);
+}
+
+.dropdown-menu {
+    min-width: 150px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+}
+
+.dropdown-item {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #000;
+}
+
+.status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
+
+.status-paid {
+    font-size: 0.8rem;
+    color: #28a745 !important;
+}
+
+.status-unpaid {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Month Selector Styles */
+.month-dropdown-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    padding: 0.4rem 0.8rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    white-space: nowrap;
+}
+
+.month-dropdown-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+.expenses-link {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.expenses-link:hover {
+    text-decoration: underline;
+    transform: scale(1.05);
+}
+
+.view-details-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    padding: 0.4rem 0.8rem;
+    font-weight: 500;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    white-space: nowrap;
+    text-decoration: none;
+    margin-right: 0.5rem;
+}
+
+.view-details-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+    color: white;
+}
+
+/* Dark Mode Styles */
+.dark-mode .home-header {
+    background-color: #1e2329 !important;
+    color: #ffffff !important;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark-mode .greeting-text h4 {
+    color: #e2e8f0 !important;
+}
+
+.dark-mode .greeting-text p {
+    color: #a0aec0 !important;
+}
+
+.dark-mode .logo-small {
+    color: #3182ce !important;
+}
+
+.dark-mode .categories-section {
+    background-color: #1e2329 !important;
+    color: #ffffff !important;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark-mode .section-title {
+    color: #e2e8f0 !important;
+}
+
+.dark-mode .category-name {
+    color: #e2e8f0 !important;
+}
+
+.dark-mode .category-amount {
+    color: #3182ce !important;
+}
+
+.dark-mode .category-details {
+    color: #a0aec0 !important;
+}
+
+.dark-mode .due-date {
+    color: #3182ce !important;
+}
+
+.dark-mode .category-type {
+    color: #a0aec0 !important;
+}
+
+.dark-mode .no-categories {
+    color: #a0aec0 !important;
+}
+
+.dark-mode .no-categories i {
+    color: #4a5568 !important;
+}
+
+.dark-mode .dashboard-title {
+    color: #e2e8f0 !important;
+}
+
+.dark-mode .add-category-btn {
+    background: linear-gradient(45deg, #3182ce, #2b6cb0) !important;
+    color: #ffffff !important;
+}
+
+.dark-mode .add-category-btn:hover {
+    background: linear-gradient(45deg, #2b6cb0, #2c5282) !important;
+}
+
+.dark-mode .pay-btn {
+    background: linear-gradient(45deg, #3182ce, #2b6cb0) !important;
+    color: #ffffff !important;
+}
+
+.dark-mode .pay-btn:hover {
+    background: linear-gradient(45deg, #2b6cb0, #2c5282) !important;
+}
+
+.dark-mode .payment-status-btn-inline {
+    background: #3182ce !important;
+    color: #ffffff !important;
+}
+
+.dark-mode .payment-status-btn-inline:hover {
+    background: #3182ce !important;
+}
+
+.dark-mode .payment-status-btn-inline.paid {
+    background: none !important;
+    color: #3182ce !important;
+}
+
+.dark-mode .payment-status-btn-inline.paid:hover {
+    background: none !important;
+    color: #3182ce !important;
+}
+
+.dark-mode .payment-status-paid {
+    background-color: #3182ce !important;
+    color: #ffffff !important;
+}
+
+.dark-mode .unpaid-bills-btn {
+    background: #e53e3e !important;
+    color: #ffffff !important;
+}
+
+.dark-mode .unpaid-bills-btn:hover {
+    background: #c53030 !important;
+    color: #ffffff !important;
+}
+
+.dark-mode .status-badge {
+    color: #ffffff !important;
+}
+
+.dark-mode .status-paid {
+    background: #155724;
+    color: #ffffff !important;
+}
+
+.dark-mode .status-unpaid {
+    background: #e53e3e !important;
+    color: #ffffff !important;
+}
+
+.dark-mode .month-dropdown-btn {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.dark-mode .month-dropdown-btn:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+}
+
+.dark-mode .view-details-btn {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.dark-mode .view-details-btn:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Blue Theme Styles */
+.blue-theme .home-header {
+    background-color: #ffffff !important;
+    color: #1a365d !important;
+    box-shadow: 0 5px 20px rgba(59, 130, 246, 0.15) !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+.blue-theme .greeting-text h4 {
+    color: #1a365d !important;
+}
+
+.blue-theme .greeting-text p {
+    color: #4a5568 !important;
+}
+
+.blue-theme .logo-small {
+    color: #3182ce !important;
+}
+
+.blue-theme .categories-section {
+    background-color: #ffffff !important;
+    color: #1a365d !important;
+    box-shadow: 0 5px 20px rgba(59, 130, 246, 0.15) !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+.blue-theme .section-title {
+    color: #1a365d !important;
+}
+
+.blue-theme .category-name {
+    color: #1a365d !important;
+}
+
+.blue-theme .category-amount {
+    color: #3182ce !important;
+}
+
+.blue-theme .category-details {
+    color: #4a5568 !important;
+}
+
+.blue-theme .due-date {
+    color: #3182ce !important;
+}
+
+.blue-theme .category-type {
+    color: #4a5568 !important;
+}
+
+.blue-theme .no-categories {
+    color: #4a5568 !important;
+}
+
+.blue-theme .no-categories i {
+    color: #cbd5e0 !important;
+}
+
+.blue-theme .dashboard-title {
+    color: #ffffff !important;
+}
+
+.blue-theme .add-category-btn {
+    background: linear-gradient(45deg, #3182ce, #2b6cb0) !important;
+    color: #ffffff !important;
+}
+
+.blue-theme .add-category-btn:hover {
+    background: linear-gradient(45deg, #2b6cb0, #2c5282) !important;
+}
+
+.blue-theme .pay-btn {
+    background: linear-gradient(45deg, #3182ce, #2b6cb0) !important;
+    color: #ffffff !important;
+}
+
+.blue-theme .pay-btn:hover {
+    background: linear-gradient(45deg, #2b6cb0, #2c5282) !important;
+}
+
+.blue-theme .payment-status-btn-inline {
+    background: #3182ce !important;
+    color: #ffffff !important;
+}
+
+.blue-theme .payment-status-btn-inline:hover {
+    background: #3182ce !important;
+}
+
+.blue-theme .payment-status-btn-inline.paid {
+    background: none !important;
+    color: #3182ce !important;
+}
+
+.blue-theme .payment-status-btn-inline.paid:hover {
+    background: none !important;
+    color: #3182ce !important;
+}
+
+.blue-theme .payment-status-paid {
+    background-color: #3182ce !important;
+    color: #ffffff !important;
+}
+
+.blue-theme .unpaid-bills-btn {
+    background: #e53e3e !important;
+    color: #ffffff !important;
+}
+
+.blue-theme .unpaid-bills-btn:hover {
+    background: #c53030 !important;
+    color: #ffffff !important;
+}
+
+.blue-theme .status-badge {
+    color: #ffffff !important;
+}
+
+.blue-theme .status-paid {
+    color: #29a947 !important;
+}
+
+.blue-theme .status-unpaid {
+    background: #e53e3e !important;
+    color: #ffffff !important;
+}
+
+.blue-theme .budget-amount {
+    color: #ffffff !important;
+}
+
+.blue-theme .budget-label {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.blue-theme .budget-item {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.blue-theme .progress-bar {
+    background: rgba(255, 255, 255, 0.3) !important;
+}
+
+.blue-theme .text-white-50 {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.blue-theme .month-dropdown-btn {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+}
+
+.blue-theme .month-dropdown-btn:hover {
+    background: rgba(255, 255, 255, 0.25) !important;
+}
+
+.blue-theme .view-details-btn {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+}
+
+.blue-theme .view-details-btn:hover {
+    background: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Green Theme Styles */
+.green-theme .home-header {
+    background-color: #ffffff !important;
+    color: #1e7e5e !important;
+    box-shadow: 0 5px 20px rgba(52, 167, 114, 0.15) !important;
+    border: 1px solid rgba(52, 167, 114, 0.12) !important;
+}
+
+.green-theme .greeting-text h4 {
+    color: #1e7e5e !important;
+}
+
+.green-theme .greeting-text p {
+    color: rgba(30, 126, 94, 0.8) !important;
+}
+
+.green-theme .logo-small {
+    color: #2d8659 !important;
+}
+
+.green-theme .categories-section {
+    background-color: #ffffff !important;
+    color: #1e7e5e !important;
+    box-shadow: 0 5px 20px rgba(52, 167, 114, 0.15) !important;
+    border: 1px solid rgba(52, 167, 114, 0.12) !important;
+}
+
+.green-theme .section-title {
+    color: #1e7e5e !important;
+}
+
+.green-theme .category-name {
+    color: #1e7e5e !important;
+}
+
+.green-theme .category-amount {
+    color: #2d8659 !important;
+}
+
+.green-theme .category-details {
+    color: rgba(30, 126, 94, 0.8) !important;
+}
+
+.green-theme .due-date {
+    color: #2d8659 !important;
+}
+
+.green-theme .category-type {
+    color: rgba(30, 126, 94, 0.8) !important;
+}
+
+.green-theme .no-categories {
+    color: rgba(30, 126, 94, 0.8) !important;
+}
+
+.green-theme .no-categories i {
+    color: rgba(45, 134, 89, 0.6) !important;
+}
+
+.green-theme .dashboard-title {
+    color: #ffffff !important;
+}
+
+.green-theme .add-category-btn {
+    background: linear-gradient(45deg, #2d8659, #34a772) !important;
+    color: #ffffff !important;
+}
+
+.green-theme .add-category-btn:hover {
+    background: linear-gradient(45deg, #34a772, #2d8659) !important;
+}
+
+.green-theme .pay-btn {
+    background: linear-gradient(45deg, #2d8659, #34a772) !important;
+    color: #ffffff !important;
+}
+
+.green-theme .pay-btn:hover {
+    background: linear-gradient(45deg, #34a772, #2d8659) !important;
+}
+
+.green-theme .payment-status-btn-inline {
+    background: #2d8659 !important;
+    color: #ffffff !important;
+}
+
+.green-theme .payment-status-btn-inline:hover {
+    background: #2d8659 !important;
+}
+
+.green-theme .payment-status-btn-inline.paid {
+    background: none !important;
+    color: #2d8659 !important;
+}
+
+.green-theme .payment-status-btn-inline.paid:hover {
+    background: none !important;
+    color: #2d8659 !important;
+}
+
+.green-theme .payment-status-paid {
+    background-color: #2d8659 !important;
+    color: #ffffff !important;
+}
+
+.green-theme .unpaid-bills-btn {
+    background: #e53e3e !important;
+    color: #ffffff !important;
+}
+
+.green-theme .unpaid-bills-btn:hover {
+    background: #c53030 !important;
+    color: #ffffff !important;
+}
+
+.green-theme .status-badge {
+    color: #ffffff !important;
+}
+
+.green-theme .status-paid {
+    color: #2d8659 !important;
+}
+
+.green-theme .status-unpaid {
+    background: #e53e3e !important;
+    color: #ffffff !important;
+}
+
+.green-theme .budget-amount {
+    color: #ffffff !important;
+}
+
+.green-theme .budget-label {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.green-theme .budget-item {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.green-theme .progress-bar {
+    background: rgba(255, 255, 255, 0.3) !important;
+}
+
+.green-theme .text-white-50 {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.green-theme .month-dropdown-btn {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+}
+
+.green-theme .month-dropdown-btn:hover {
+    background: rgba(255, 255, 255, 0.25) !important;
+}
+
+.green-theme .view-details-btn {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+}
+
+.green-theme .view-details-btn:hover {
+    background: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Modal Styles for JavaScript-generated content */
+.dark-mode #monthlyDetailsModal .card.bg-info,
+.dark-mode #monthlyDetailsModal .card.bg-success {
+    background: linear-gradient(135deg, #2d3748, #4a5568) !important;
+    color: #ffffff !important;
+}
+
+.dark-mode #monthlyDetailsModal .card[style*="background: linear-gradient"] {
+    background: linear-gradient(135deg, #3182ce, #2b6cb0) !important;
+    color: white !important;
+}
+
+.blue-theme #monthlyDetailsModal .card.bg-info,
+.blue-theme #monthlyDetailsModal .card.bg-success {
+    background: linear-gradient(135deg, var(--blue-strong), var(--blue-accent)) !important;
+    color: #ffffff !important;
+}
+
+.blue-theme #monthlyDetailsModal .card[style*="background: linear-gradient"] {
+    background: linear-gradient(135deg, var(--blue-strong), var(--blue-accent)) !important;
+    color: white !important;
+}
+
+.green-theme #monthlyDetailsModal .card.bg-info,
+.green-theme #monthlyDetailsModal .card.bg-success {
+    background: linear-gradient(135deg, var(--green-strong), var(--green-accent)) !important;
+    color: #ffffff !important;
+}
+
+.green-theme #monthlyDetailsModal .card[style*="background: linear-gradient"] {
+    background: linear-gradient(135deg, var(--green-strong), var(--green-accent)) !important;
+    color: white !important;
+}

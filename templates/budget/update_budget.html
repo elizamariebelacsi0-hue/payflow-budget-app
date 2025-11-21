@@ -1,0 +1,111 @@
+{% extends 'budget/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}Update Budget - Payflow{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/category.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h4><i class="fas fa-chart-pie"></i> Update Monthly Budget</h4>
+            <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-sm">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+        </div>
+        <div class="card-body">
+                     
+            <!-- Tab Navigation -->
+            <ul class="nav nav-tabs mb-4" id="budgetTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="set-budget-tab" data-bs-toggle="tab" data-bs-target="#set-budget" type="button" role="tab">
+                        <i class="fas fa-edit"></i> Set Budget
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="add-budget-tab" data-bs-toggle="tab" data-bs-target="#add-budget" type="button" role="tab">
+                        <i class="fas fa-plus-circle"></i> Additional Budget
+                    </button>
+                </li>
+            </ul>
+            
+            <!-- Tab Content -->
+            <div class="tab-content" id="budgetTabsContent">
+                <!-- Set Budget Tab -->
+                <div class="tab-pane fade show active" id="set-budget" role="tabpanel">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <div class="d-flex gap-2 mt-3">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save" style="color: white;"></i> Update Budget
+                            </button>
+                            
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Additional Budget Tab -->
+                <div class="tab-pane fade" id="add-budget" role="tabpanel">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="add_additional_budget" value="1">
+                        <div class="mb-3">
+                            <label for="id_amount_added" class="form-label">
+                                <i class="fas fa-money-bill-wave"></i> Additional Budget Amount
+                            </label>
+                            {{ additional_form.amount_added }}
+                            {% if additional_form.amount_added.errors %}
+                                <div class="text-danger mt-1">
+                                    {{ additional_form.amount_added.errors }}
+                                </div>
+                            {% endif %}
+                            <small class="form-text text-muted">Enter the amount you want to add to your current budget.</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_notes" class="form-label">
+                                <i class="fas fa-sticky-note"></i> Notes (Optional)
+                            </label>
+                            {{ additional_form.notes }}
+                            {% if additional_form.notes.errors %}
+                                <div class="text-danger mt-1">
+                                    {{ additional_form.notes.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_category_type" class="form-label">
+                                <i class="fas fa-tag"></i> Category Type (Optional)
+                            </label>
+                            <select name="category_type" id="id_category_type" class="form-control">
+                                <option value="">Select Category Type</option>
+                                <option value="rent">Rent</option>
+                                <option value="utilities">Utilities</option>
+                                <option value="groceries">Groceries</option>
+                                <option value="transportation">Transportation</option>
+                                <option value="healthcare">Healthcare</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="education">Education</option>
+                                <option value="insurance">Insurance</option>
+                                <option value="debt">Debt Payment</option>
+                                <option value="savings">Savings</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="d-flex gap-2 mt-3">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-plus" style="color: white;"></i> Add to Budget
+                            </button>
+                           
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

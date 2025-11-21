@@ -1,0 +1,251 @@
+{% extends 'budget/base.html' %}
+{% load crispy_forms_tags %}
+{% load budget_filters %}
+
+{% block title %}Transactions - Payflow{% endblock %}
+
+{% block extra_css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/transactions.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Header -->
+    <div class="transactions-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <h4><i class="fas fa-exchange-alt"></i> Transaction History</h4>
+            <div class="d-flex gap-2">
+                <button class="btn add-transaction-btn" onclick="showMonthlyOverview()">
+                    <i class=""></i> Monthly Overview
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Transactions List -->
+    {% if transactions %}
+        {% for transaction in transactions %}
+        <div class="transaction-item">
+            <div class="transaction-header">
+                <h6 class="transaction-title">{{ transaction.title }}</h6>
+                <span class="transaction-amount amount-{{ transaction.transaction_type }}">
+                    {% if transaction.transaction_type == 'income' %}+{% else %}-{% endif %}₱{{ transaction.amount|accurate_amount }}
+                </span>
+            </div>
+            <div class="transaction-details">
+                <span><i class="fas fa-calendar"></i> {{ transaction.date|date:"M d, Y" }}</span>
+                {% if transaction.category %}
+                    <span><i class="fas fa-tag"></i> {{ transaction.category.name }}</span>
+                {% endif %}
+                <span class="badge {% if transaction.transaction_type == 'income' %}bg-success{% else %}bg-primary{% endif %}">
+                    {{ transaction.get_transaction_type_display }}
+                </span>
+            </div>
+            {% if transaction.description %}
+                <small class="text-muted mt-2 d-block">{{ transaction.description }}</small>
+            {% endif %}
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="text-center py-5">
+            <i class="fas fa-exchange-alt" style="font-size: 3rem; color: var(--light-pink);"></i>
+            <h6 class="mt-3">No transactions yet</h6>
+            <p class="text-muted">Your transaction history will appear here.</p>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Monthly Overview Modal -->
+<div class="modal fade" id="monthlyOverviewModal" tabindex="-1" aria-labelledby="monthlyOverviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="monthlyOverviewModalLabel">Monthly Overview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="monthlyOverviewContent">
+                    <div class="text-center">
+                        <i class="fas fa-spinner fa-spin"></i> Loading monthly data...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function showMonthlyOverview() {
+        const modal = new bootstrap.Modal(document.getElementById('monthlyOverviewModal'));
+        modal.show();
+        
+        // Detect current theme
+        const isGreenTheme = document.body.classList.contains('green-theme');
+        const isBlueTheme = document.body.classList.contains('blue-theme');
+        const primaryColor = isGreenTheme ? '#2d8659' : isBlueTheme ? '#3182ce' : 'var(--primary-pink)';
+        const buttonBg = isGreenTheme ? '#2d8659' : isBlueTheme ? '#3182ce' : 'var(--primary-pink)';
+        
+        // Load monthly overview data
+        fetch('/monthly-overview/')
+            .then(response => response.json())
+            .then(data => {
+                const content = document.getElementById('monthlyOverviewContent');
+                if (data.months && data.months.length > 0) {
+                    let html = '<div class="row">';
+                    data.months.forEach(month => {
+                        const percentage = month.budget > 0 ? Math.round((month.expenses / month.budget) * 100) : 0;
+                        const colorClass = percentage > 80 ? 'text-danger' : percentage > 60 ? 'text-warning' : 'text-success';
+                        
+                        html += `
+                            <div class="col-md-6 col-lg-4 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h6 class="mb-0">${month.month_name}</h6>
+                                       <button class="btn btn-sm btn-primary" onclick="viewMonthTransactions('${month.month_key}')" style="color: white; background-color: ${buttonBg}; border-color: ${buttonBg};">
+                                        <i class="fas fa-eye" style="color:white;"></i> View Details
+                                         </button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row text-center mb-3">
+                                            <div class="col-6">
+                                                <div class="border-end">
+                                                    <div class="fw-bold" style="color: ${primaryColor};">₱${month.budget.toLocaleString()}</div>
+                                                    <small class="text-muted">Budget</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="text-secondary fw-bold">₱${month.expenses.toLocaleString()}</div>
+                                                <small class="text-muted">Expenses</small>
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="${colorClass} fw-bold fs-5">${percentage}% Used</div>
+                                            <div class="progress mt-2" style="height: 8px;">
+                                                <div class="progress-bar ${percentage > 80 ? 'bg-danger' : percentage > 60 ? 'bg-warning' : 'bg-success'}" 
+                                                     style="width: ${Math.min(percentage, 100)}%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 text-center">
+                                            <small class="text-muted">
+                                                ${month.transaction_count} transactions
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    html += '</div>';
+                    content.innerHTML = html;
+                } else {
+                    content.innerHTML = '<div class="text-center text-muted">No monthly data available</div>';
+                }
+            })
+            .catch(error => {
+                console.error('Error loading monthly overview:', error);
+                document.getElementById('monthlyOverviewContent').innerHTML = 
+                    '<div class="text-center text-danger">Error loading monthly data</div>';
+            });
+    }
+
+    function viewMonthTransactions(monthKey) {
+        // Close the overview modal
+        const overviewModal = bootstrap.Modal.getInstance(document.getElementById('monthlyOverviewModal'));
+        overviewModal.hide();
+        
+        // Show loading state
+        const content = document.getElementById('monthlyOverviewContent');
+        content.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Loading transactions...</div>';
+        
+        // Load transactions for the specific month
+        fetch(`/month-transactions/${monthKey}/`)
+            .then(response => response.json())
+            .then(data => {
+                // Detect current theme for consistent colors
+                const isGreenTheme = document.body.classList.contains('green-theme');
+                const isBlueTheme = document.body.classList.contains('blue-theme');
+                const primaryColor = isGreenTheme ? '#2d8659' : isBlueTheme ? '#3182ce' : 'var(--primary-pink)';
+                
+                let html = `
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5>${data.month_name} Transactions</h5>
+                        
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <div class="fw-bold fs-4" style="color: ${primaryColor};">₱${data.budget.toLocaleString()}</div>
+                                    <small class="text-muted">Monthly Budget</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <div class="fw-bold fs-4" style="color: ${primaryColor};">₱${data.expenses.toLocaleString()}</div>
+                                    <small class="text-muted">Total Expenses</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <div class="text-success fw-bold fs-4">₱${(data.budget - data.expenses).toLocaleString()}</div>
+                                    <small class="text-muted">Remaining</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                if (data.transactions && data.transactions.length > 0) {
+                    html += '<div class="list-group">';
+                    data.transactions.forEach(transaction => {
+                        const amountClass = transaction.transaction_type === 'income' ? 'text-success' : 'text-danger';
+                        const badgeClass = transaction.transaction_type === 'income' ? 'bg-success' : '';
+                        const badgeStyle = transaction.transaction_type === 'income' ? '' : `style="background-color: ${primaryColor}; color: white;"`;
+                        
+                        html += `
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1">${transaction.title}</h6>
+                                        <small class="text-muted">
+                                            <i class="fas fa-calendar"></i> ${transaction.date}
+                                            ${transaction.category ? `<i class="fas fa-tag ms-2"></i> ${transaction.category}` : ''}
+                                        </small>
+                                        ${transaction.description ? `<div class="mt-1"><small class="text-muted">${transaction.description}</small></div>` : ''}
+                                    </div>
+                                    <div class="text-end">
+                                        <span class="${amountClass} fw-bold">
+                                            ${transaction.transaction_type === 'income' ? '+' : '-'}₱${transaction.amount}
+                                        </span>
+                                        <br>
+                                        <span class="badge ${badgeClass}" ${badgeStyle || ''}>${transaction.transaction_type}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    html += '</div>';
+                } else {
+                    html += '<div class="text-center text-muted py-4">No transactions found for this month</div>';
+                }
+                
+                content.innerHTML = html;
+                
+                // Show the modal again with transaction details
+                const modal = new bootstrap.Modal(document.getElementById('monthlyOverviewModal'));
+                modal.show();
+            })
+            .catch(error => {
+                console.error('Error loading month transactions:', error);
+                content.innerHTML = '<div class="text-center text-danger">Error loading transactions</div>';
+            });
+    }
+</script>
+{% endblock %}

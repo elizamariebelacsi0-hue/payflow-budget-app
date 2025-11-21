@@ -1,0 +1,204 @@
+{% extends 'budget/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}{{ category.name }} - Payflow{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/category.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Back Button -->
+    <div class="mb-3">
+        <a href="{% url 'home' %}" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back
+        </a>
+    </div>
+    
+    <!-- Category Header -->
+    <div class="category-detail-header">
+        <div class="category-info">
+            <div>
+                <h2 class="category-name">{{ category.name }}</h2>
+                <div class="category-meta">
+                    <span><i class="fas fa-tag"></i> {{ category.get_category_type_display }}</span>
+                    {% if category.payment_status == 'paid' %}
+                        <span><i class="fas fa-calendar"></i> Paid: {{ category.payment_date|date:"M d, Y" }}</span>
+                        {% if category.is_monthly %}
+                            <span><i class="fas fa-sync-alt"></i> Monthly</span>
+                            <span class="badge bg-success">Paid for this month</span>
+                        {% else %}
+                            <span class="badge bg-success">Paid</span>
+                        {% endif %}
+                    {% else %}
+                        <span><i class="fas fa-calendar"></i> Due: {{ category.due_date|date:"M d, Y" }}</span>
+                        {% if category.is_monthly %}
+                            <span><i class="fas fa-sync-alt"></i> Monthly</span>
+                        {% endif %}
+                        {% if category.is_due_soon %}
+                            <span class="badge bg-warning text-dark">Due Soon</span>
+                        {% endif %}
+                        {% if category.is_overdue %}
+                            <span class="badge bg-danger">Overdue</span>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="category-amount">
+                ₱{{ category.amount|floatformat:2 }}
+            </div>
+        </div>
+        
+
+    </div>
+    
+      
+    <!-- Edit Category Form - Only show for unpaid categories or monthly categories -->
+    {% if category.payment_status == 'unpaid' or category.is_monthly %}
+    <div class="payment-form-card">
+        <h5 class="mb-3">Edit Category</h5>
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="d-flex gap-2">
+                <button type="submit" name="edit_category" class="btn btn-primary">
+                    <i class="fas fa-save" style="color: white"></i> Update Category
+                </button>
+                <a href="{% url 'home' %}" class="btn btn-secondary">
+                    <i class="fas fa-times"></i> Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+    {% endif %}
+
+    <!-- Record Payment Modal -->
+    <div class="modal fade" id="recordPaymentModal" tabindex="-1" aria-labelledby="recordPaymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="recordPaymentModalLabel">Record Payment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" enctype="multipart/form-data" id="recordPaymentForm">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Category</label>
+                            <input type="text" class="form-control" value="{{ category.name }}" readonly>
+                        </div>
+                        {{ payment_form|crispy }}
+                    </form>
+                    <small class="text-muted d-block mt-2">Select payment method. For GCash, provide Transaction ID and the GCash account used. You may upload a screenshot as proof.</small>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" form="recordPaymentForm" name="record_payment" class="btn btn-success">
+                        <i class="fas fa-check"></i> Save payment
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payments History -->
+    <div class="payments-list">
+        <h5 class="mb-3">Payment History</h5>
+        
+        {% if payments %}
+            {% for payment in payments %}
+            <div class="payment-item">
+                <div class="payment-info">
+                    <div class="payment-amount">₱{{ payment.amount_paid|floatformat:2 }}</div>
+                    <div class="payment-date">{{ payment.payment_date|date:"M d, Y" }}</div>
+                    <div>
+                        <span class="badge {% if payment.payment_type == 'full' %}bg-success{% else %}bg-warning text-dark{% endif %} mb-2">
+                            {{ payment.get_payment_type_display }}
+                        </span><br>
+                        {% if payment.payment_method == 'gcash' %}
+                            <small class="text-muted">The payment was processed through GCash (Account No. {{ payment.gcash_account_used }}) under transaction number {{ payment.transaction_id }}.</small>
+                        {% else %}
+                            <small class="text-muted">The payment was processed through cash</small>
+                        {% endif %}
+                        {% if payment.proof_image %}
+                            <div class="mt-2">
+                                <a href="{{ payment.proof_image.url }}" target="_blank" class="btn btn-sm btn-outline-secondary">
+                                    <i class="fas fa-image"></i> View proof
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-payments">
+                <i class="fas fa-receipt"></i>
+                <h6>No payments recorded yet</h6>
+                <p>Record your first payment using the form above.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 
+
+{% block extra_js %}
+<script>
+    (function() {
+        function toggleGcashFields() {
+            var methodSelect = document.getElementById('id_payment_method');
+            if (!methodSelect) return;
+            var isGcash = methodSelect.value === 'gcash';
+            var txField = document.getElementById('id_transaction_id');
+            var accField = document.getElementById('id_gcash_account_used');
+            if (txField) {
+                txField.required = isGcash;
+                txField.closest('.mb-3, .form-group')?.classList.toggle('d-none', !isGcash);
+            }
+            if (accField) {
+                accField.required = isGcash;
+                accField.closest('.mb-3, .form-group')?.classList.toggle('d-none', !isGcash);
+            }
+        }
+        
+        function togglePaymentAmount() {
+            var typeSelect = document.getElementById('id_payment_type');
+            var amountField = document.getElementById('id_amount_paid');
+            if (!typeSelect || !amountField) return;
+            
+            var categoryAmount = {{ category.amount }};
+            
+            if (typeSelect.value === 'full') {
+                amountField.value = categoryAmount;
+                amountField.disabled = true;
+            } else {
+                amountField.disabled = false;
+                amountField.value = '';
+                amountField.focus();
+            }
+        }
+        
+        document.addEventListener('change', function(e){
+            if (e.target && e.target.id === 'id_payment_method') {
+                toggleGcashFields();
+            }
+            if (e.target && e.target.id === 'id_payment_type') {
+                togglePaymentAmount();
+            }
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleGcashFields();
+            togglePaymentAmount();
+        });
+        
+        // Also toggle when modal opens to ensure correct state
+        document.getElementById('recordPaymentModal')?.addEventListener('shown.bs.modal', function() {
+            toggleGcashFields();
+            togglePaymentAmount();
+        });
+    })();
+</script>
+{% endblock %}

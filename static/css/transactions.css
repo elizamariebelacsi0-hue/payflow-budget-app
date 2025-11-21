@@ -1,0 +1,448 @@
+/* Transactions Page Styles */
+.transactions-header {
+    background: white;
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 5px 20px rgba(249, 139, 177, 0.12);
+}
+
+.transaction-item {
+    background: white;
+    border-radius: 15px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 10px rgba(249, 139, 177, 0.12);
+    transition: all 0.3s ease;
+}
+
+.transaction-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(249, 139, 177, 0.2);
+}
+
+.transaction-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.transaction-title {
+    font-weight: bold;
+    color: var(--dark-pink);
+    margin-bottom: 0;
+}
+
+.transaction-amount {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.amount-income {
+    color: #28a745;
+}
+
+.amount-expense {
+    color: var(--primary-pink);
+}
+
+.transaction-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.add-transaction-btn {
+    background: var(--primary-pink);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.add-transaction-btn:hover {
+    background: var(--dark-pink);
+    transform: translateY(-2px);
+}
+
+/* Monthly Overview Modal Styling */
+#monthlyOverviewModal .card {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+#monthlyOverviewModal .card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+#monthlyOverviewModal .card-header {
+    background: linear-gradient(135deg, var(--primary-pink), var(--dark-pink));
+    color: white;
+    border: none;
+    border-radius: 15px 15px 0 0;
+}
+
+#monthlyOverviewModal .card-body {
+    padding: 1.5rem;
+}
+
+#monthlyOverviewModal .btn-outline-primary {
+    color: var(--primary-pink);
+    border-color: var(--primary-pink);
+}
+
+#monthlyOverviewModal .btn-outline-primary:hover {
+    background-color: var(--primary-pink);
+    border-color: var(--primary-pink);
+    color: white;
+}
+
+/* Blue Theme Styles */
+.blue-theme .transactions-header {
+    background-color: #ffffff !important;
+    color: #1a365d !important;
+    box-shadow: 0 5px 20px rgba(59, 130, 246, 0.15) !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+.blue-theme .transaction-item {
+    background-color: #ffffff !important;
+    color: #1a365d !important;
+    box-shadow: 0 2px 10px rgba(59, 130, 246, 0.15) !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+.blue-theme .transaction-item:hover {
+    box-shadow: 0 5px 20px rgba(59, 130, 246, 0.25) !important;
+}
+
+.blue-theme .transaction-title {
+    color: #1a365d !important;
+}
+
+.blue-theme .amount-income {
+    color: #38a169 !important;
+}
+
+.blue-theme .amount-expense {
+    color: #3182ce !important;
+}
+
+.blue-theme .transaction-details {
+    color: #4a5568 !important;
+}
+
+.blue-theme .add-transaction-btn {
+    background: linear-gradient(45deg, #3182ce, #2b6cb0) !important;
+    color: #ffffff !important;
+}
+
+.blue-theme .add-transaction-btn:hover {
+    background: linear-gradient(45deg, #2b6cb0, #2c5282) !important;
+}
+
+.blue-theme .text-muted {
+    color: #4a5568 !important;
+}
+
+.blue-theme .badge.bg-primary {
+    background-color: #3182ce !important;
+    color: #ffffff !important;
+}
+
+.blue-theme .badge.bg-success {
+    background-color: #38a169 !important;
+    color: #ffffff !important;
+}
+
+.blue-theme .text-center i {
+    color: #cbd5e0 !important;
+}
+
+.blue-theme .text-center h6 {
+    color: #1a365d !important;
+}
+
+.blue-theme .text-center p {
+    color: #4a5568 !important;
+}
+
+.blue-theme #monthlyOverviewModal .card {
+    background-color: #ffffff !important;
+    color: #1a365d !important;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.15) !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+.blue-theme #monthlyOverviewModal .card:hover {
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.25) !important;
+}
+
+.blue-theme #monthlyOverviewModal .card-header {
+    background: linear-gradient(135deg, #3182ce, #2b6cb0) !important;
+    color: #ffffff !important;
+}
+
+.blue-theme #monthlyOverviewModal .btn-outline-primary {
+    color: #3182ce !important;
+    border-color: #3182ce !important;
+}
+
+.blue-theme #monthlyOverviewModal .btn-outline-primary:hover {
+    background-color: #3182ce !important;
+    border-color: #3182ce !important;
+    color: #ffffff !important;
+}
+
+.blue-theme #monthlyOverviewModal .btn-outline-secondary {
+    color: #4a5568 !important;
+    border-color: #cbd5e0 !important;
+}
+
+.blue-theme #monthlyOverviewModal .btn-outline-secondary:hover {
+    background-color: #4a5568 !important;
+    border-color: #4a5568 !important;
+    color: #ffffff !important;
+}
+
+.blue-theme #monthlyOverviewModal .text-primary {
+    color: #3182ce !important;
+}
+
+.blue-theme #monthlyOverviewModal .text-secondary {
+    color: #4a5568 !important;
+}
+
+.blue-theme #monthlyOverviewModal .text-success {
+    color: #38a169 !important;
+}
+
+.blue-theme #monthlyOverviewModal .text-danger {
+    color: #e53e3e !important;
+}
+
+.blue-theme #monthlyOverviewModal .text-warning {
+    color: #d69e2e !important;
+}
+
+.blue-theme #monthlyOverviewModal .text-muted {
+    color: #4a5568 !important;
+}
+
+.blue-theme #monthlyOverviewModal .list-group-item {
+    background-color: #f7fafc !important;
+    color: #1a365d !important;
+    border-color: #e2e8f0 !important;
+}
+
+.blue-theme #monthlyOverviewModal .list-group-item h6 {
+    color: #1a365d !important;
+}
+
+.blue-theme #monthlyOverviewModal .list-group-item small {
+    color: #4a5568 !important;
+}
+
+.blue-theme #monthlyOverviewModal .progress-bar.bg-danger {
+    background-color: #e53e3e !important;
+}
+
+.blue-theme #monthlyOverviewModal .progress-bar.bg-warning {
+    background-color: #d69e2e !important;
+}
+
+.blue-theme #monthlyOverviewModal .progress-bar.bg-success {
+    background-color: #38a169 !important;
+}
+
+/* Green Theme Styles */
+.green-theme .transactions-header {
+    background-color: #ffffff !important;
+    color: #1e7e5e !important;
+    box-shadow: 0 5px 20px rgba(52, 167, 114, 0.15) !important;
+    border: 1px solid rgba(52, 167, 114, 0.12) !important;
+}
+
+.green-theme .transaction-item {
+    background-color: #ffffff !important;
+    color: #1e7e5e !important;
+    box-shadow: 0 2px 10px rgba(52, 167, 114, 0.15) !important;
+    border: 1px solid rgba(52, 167, 114, 0.12) !important;
+}
+
+.green-theme .transaction-item:hover {
+    box-shadow: 0 5px 20px rgba(52, 167, 114, 0.25) !important;
+}
+
+.green-theme .transaction-title {
+    color: #1e7e5e !important;
+}
+
+.green-theme .amount-income {
+    color: #38a169 !important;
+}
+
+.green-theme .amount-expense {
+    color: #2d8659 !important;
+}
+
+.green-theme .transaction-details {
+    color: rgba(30, 126, 94, 0.8) !important;
+}
+
+.green-theme .add-transaction-btn {
+    background: linear-gradient(45deg, #2d8659, #34a772) !important;
+    color: #ffffff !important;
+}
+
+.green-theme .add-transaction-btn:hover {
+    background: linear-gradient(45deg, #34a772, #2d8659) !important;
+}
+
+.green-theme .text-muted {
+    color: rgba(30, 126, 94, 0.7) !important;
+}
+
+.green-theme .badge.bg-primary {
+    background-color: #2d8659 !important;
+    color: #ffffff !important;
+}
+
+.green-theme .badge.bg-success {
+    background-color: #38a169 !important;
+    color: #ffffff !important;
+}
+
+.green-theme .text-center i {
+    color: rgba(45, 134, 89, 0.6) !important;
+}
+
+.green-theme .text-center h6 {
+    color: #1e7e5e !important;
+}
+
+.green-theme .text-center p {
+    color: rgba(30, 126, 94, 0.8) !important;
+}
+
+.green-theme #monthlyOverviewModal .card {
+    background-color: #ffffff !important;
+    color: #1e7e5e !important;
+    box-shadow: 0 4px 15px rgba(52, 167, 114, 0.15) !important;
+    border: 1px solid rgba(52, 167, 114, 0.12) !important;
+}
+
+.green-theme #monthlyOverviewModal .card:hover {
+    box-shadow: 0 6px 20px rgba(52, 167, 114, 0.25) !important;
+}
+
+.green-theme #monthlyOverviewModal .card-header {
+    background: linear-gradient(135deg, #2d8659, #34a772) !important;
+    color: #ffffff !important;
+}
+
+.green-theme #monthlyOverviewModal .btn-outline-primary {
+    color: #2d8659 !important;
+    border-color: #2d8659 !important;
+}
+
+.green-theme #monthlyOverviewModal .btn-outline-primary:hover {
+    background-color: #2d8659 !important;
+    border-color: #2d8659 !important;
+    color: #ffffff !important;
+}
+
+.green-theme #monthlyOverviewModal .btn-outline-secondary {
+    color: rgba(30, 126, 94, 0.7) !important;
+    border-color: rgba(52, 167, 114, 0.3) !important;
+}
+
+.green-theme #monthlyOverviewModal .btn-outline-secondary:hover {
+    background-color: rgba(52, 167, 114, 0.1) !important;
+    border-color: rgba(52, 167, 114, 0.3) !important;
+    color: #1e7e5e !important;
+}
+
+.green-theme #monthlyOverviewModal .text-primary {
+    color: #2d8659 !important;
+}
+
+.green-theme #monthlyOverviewModal .text-secondary {
+    color: rgba(30, 126, 94, 0.8) !important;
+}
+
+.green-theme #monthlyOverviewModal .text-success {
+    color: #38a169 !important;
+}
+
+.green-theme #monthlyOverviewModal .text-danger {
+    color: #e53e3e !important;
+}
+
+.green-theme #monthlyOverviewModal .text-warning {
+    color: #d69e2e !important;
+}
+
+.green-theme #monthlyOverviewModal .text-muted {
+    color: rgba(30, 126, 94, 0.7) !important;
+}
+
+.green-theme #monthlyOverviewModal .list-group-item {
+    background-color: #f0f9f4 !important;
+    color: #1e7e5e !important;
+    border-color: rgba(52, 167, 114, 0.12) !important;
+}
+
+.green-theme #monthlyOverviewModal .list-group-item h6 {
+    color: #1e7e5e !important;
+}
+
+.green-theme #monthlyOverviewModal .list-group-item small {
+    color: rgba(30, 126, 94, 0.7) !important;
+}
+
+.green-theme #monthlyOverviewModal .progress-bar.bg-danger {
+    background-color: #e53e3e !important;
+}
+
+.green-theme #monthlyOverviewModal .progress-bar.bg-warning {
+    background-color: #d69e2e !important;
+}
+
+.green-theme #monthlyOverviewModal .progress-bar.bg-success {
+    background-color: #38a169 !important;
+}
+
+.green-theme #monthlyOverviewModal .modal-content {
+    background-color: #ffffff !important;
+    color: #1e7e5e !important;
+}
+
+.green-theme #monthlyOverviewModal .modal-header {
+    background: linear-gradient(135deg, #2d8659, #34a772) !important;
+    color: #ffffff !important;
+    border-bottom: 1px solid rgba(52, 167, 114, 0.2) !important;
+}
+
+.green-theme #monthlyOverviewModal .modal-title {
+    color: #ffffff !important;
+}
+
+.green-theme #monthlyOverviewModal .card-body {
+    background-color: #ffffff !important;
+    color: #1e7e5e !important;
+}
+
+/* Pink theme (default) styling for monthly overview buttons */
+#monthlyOverviewModal .btn-outline-primary:hover {
+    background-color: var(--primary-pink) !important;
+    border-color: var(--primary-pink) !important;
+    color: white !important;
+}

@@ -1,0 +1,887 @@
+{% extends 'budget/base.html' %}
+{% load budget_filters %}
+
+{% block title %}Home - Payflow{% endblock %}
+
+{% block extra_css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    {% csrf_token %}
+    <!-- Header with Logo and Greeting -->
+    <div class="home-header">
+        <div class="user-greeting">
+            <div class="greeting-text">
+                <h4>HELLO!</h4>
+                <p>{{ user.first_name }} {{ user.last_name }}</p>
+            </div>
+            <div class="logo-small">
+                <span style="font-size: 2rem; font-weight: bold;">₱ayflow</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dashboard -->
+<div class="dashboard-card" id="dashboard" style="position: relative;">
+    <div class="dashboard-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-2">
+                <h5 class="dashboard-title mb-0">Month of</h5>
+                <div class="dropdown">
+                    <button class="month-dropdown-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-calendar"></i> Select Month
+                    </button>
+                    <ul class="dropdown-menu" style="max-height: 200px; overflow-y: auto;">
+                        <li><a class="dropdown-item" href="#" onclick="loadMonthData('1')">January</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="loadMonthData('2')">February</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="loadMonthData('3')">March</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="loadMonthData('4')">April</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="loadMonthData('5')">May</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="loadMonthData('6')">June</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="loadMonthData('7')">July</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="loadMonthData('8')">August</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="loadMonthData('9')">September</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="loadMonthData('10')">October</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="loadMonthData('11')">November</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="loadMonthData('12')">December</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown">
+                    <button class="month-dropdown-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-calendar-alt"></i> <span id="selectedYearText">2025</span>
+                    </button>
+                    <ul class="dropdown-menu" style="max-height: 200px; overflow-y: auto;">
+                        <li><a class="dropdown-item" href="#" onclick="selectYear(2025)">2025</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="selectYear(2026)">2026</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="selectYear(2027)">2027</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="selectYear(2028)">2028</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="selectYear(2029)">2029</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="selectYear(2030)">2030</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="selectYear(2031)">2031</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="selectYear(2032)">2032</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="selectYear(2033)">2033</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="selectYear(2034)">2034</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="selectYear(2035)">2035</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="selectYear(2036)">2036</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="selectYear(2037)">2037</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="selectYear(2038)">2038</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="selectYear(2039)">2039</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="selectYear(2040)">2040</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown" style="margin-left: 10px;">
+                    <button class="btn btn-light btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 20px; color: #333;">
+                        <i class="fas fa-exclamation-triangle"></i> <span class="d-none d-sm-inline">Unpaid Bills</span>
+                    </button>
+                    <ul class="dropdown-menu" style="max-height: 200px; overflow-y: auto;">
+                        <li><a class="dropdown-item" href="#" onclick="viewUnpaidBills(1)">January</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="viewUnpaidBills(2)">February</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="viewUnpaidBills(3)">March</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="viewUnpaidBills(4)">April</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="viewUnpaidBills(5)">May</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="viewUnpaidBills(6)">June</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="viewUnpaidBills(7)">July</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="viewUnpaidBills(8)">August</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="viewUnpaidBills(9)">September</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="viewUnpaidBills(10)">October</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="viewUnpaidBills(11)">November</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="viewUnpaidBills(12)">December</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="budget-info">
+        <div class="budget-item">
+            <div class="budget-amount expenses-link" id="budgetAmount" onclick="viewSelectedMonthBudgetHistory()">₱{{ monthly_budget.total_budget|accurate_amount }}</div>
+            <div class="budget-label">Monthly Budget</div>
+        </div>
+        <div class="budget-item">
+            <div class="budget-amount expenses-link" id="expenseAmount" onclick="viewSelectedMonthTransactions()">₱{{ total_expenses|accurate_amount }}</div>
+            <div class="budget-label">Expenses</div>
+        </div>
+    </div>
+    
+    <div class="mt-3">
+        
+        <a href="#" onclick="editSelectedMonthBudget()" class="view-details-btn">
+            <i class="fas fa-edit"></i> Edit Budget
+        </a>
+    </div>
+
+</div>
+    
+    <!-- Categories Section -->
+    <div class="categories-section">
+        <div class="section-header">
+            <h5 class="section-title">Payment Categories</h5>
+            <div class="header-buttons">
+                <button class="btn add-category-btn" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                    <i class=""></i> Add Category
+                </button>
+            </div>
+        </div>
+        
+        {% if categories %}
+        <div style="max-height: 400px; overflow-y: auto; padding-right: 5px;">
+            {% for category in categories %}
+           
+            <div class="category-item {% if category.is_due_soon and category.payment_status == 'unpaid' %}due-soon{% endif %} {% if category.is_overdue and category.payment_status == 'unpaid' %}overdue{% endif %}" 
+                 onclick="window.location.href='{% url 'category_detail' category.id %}'">
+                <div class="category-actions">
+                    <button class="category-action-btn delete" 
+                       onclick="event.stopPropagation(); openDeleteModal({{ category.id }}, '{{ category.name }}');" title="Delete Category">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="category-header">
+                    <div class="category-name-section">
+                    <h6 class="category-name">{{ category.name }}</h6>
+                        {% if category.payment_status == 'paid' %}
+                            <i class="fas fa-check-circle status-paid-icon" title="Paid"></i>
+                        {% else %}
+                            <div class="dropdown" onclick="event.stopPropagation();">
+                                <button class="payment-status-btn-inline dropdown-toggle" 
+                                        data-bs-toggle="dropdown" 
+                                        aria-expanded="false">
+                                    <i class=""></i> Pay
+                                </button>
+                                <ul class="dropdown-menu">
+                             
+                                    <li>
+                                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#recordPaymentModal-{{ category.id }}">
+                                            <i class="fas fa-money-bill-wave"></i> Mark as paid
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <span class="category-amount">₱{{ category.amount|accurate_amount }}</span>
+                </div>
+
+                <div class="category-details">
+    <span class="due-date">
+        <i class="fas fa-calendar"></i> 
+        Due: {{ category.due_date|date:"M d, Y" }}
+        {% if category.payment_status == 'paid' %}
+            {% if category.is_monthly %}
+                <span class="status-badge status-paid">Paid for this month</span>
+            {% else %}
+                <span class="status-badge status-paid">Paid</span>
+            {% endif %}
+        {% else %}
+            {% if category.is_due_soon %}
+                <span class="badge bg-warning text-dark">Due Soon</span>
+            {% endif %}
+            {% if category.is_overdue %}
+                <span class="badge bg-danger">Overdue</span>
+            {% endif %}
+        {% endif %}
+        {% if category.is_monthly %}
+            <i class="fas fa-sync-alt" title="Monthly reminder"></i>
+        {% endif %}
+    </span>
+    <span class="category-type">{{ category.get_category_type_display }}</span>
+</div>
+            </div>
+       
+            {% endfor %}
+        </div>
+            
+            {# Render modals outside of clickable cards to avoid event conflicts #}
+            {% for category in categories %}
+            <div class="modal fade" id="recordPaymentModal-{{ category.id }}" tabindex="-1" aria-labelledby="recordPaymentModalLabel-{{ category.id }}" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="recordPaymentModalLabel-{{ category.id }}">Record Payment - {{ category.name }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" enctype="multipart/form-data" id="recordPaymentForm-{{ category.id }}" action="{% url 'category_detail' category.id %}">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label class="form-label">Category</label>
+                                    <input type="text" class="form-control" value="{{ category.name }}" readonly>
+                                </div>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="id_payment_type_{{ category.id }}" class="form-label">Payment Type</label>
+                                        <select name="payment_type" id="id_payment_type_{{ category.id }}" class="form-control" data-category="{{ category.id }}">
+                                            <option value="full">Full Payment</option>
+                                            <option value="partial">Partial Payment</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="id_amount_paid_{{ category.id }}" class="form-label">Amount paid</label>
+                                        <input type="number" step="0.01" min="0" max="{{ category.amount }}" name="amount_paid" id="id_amount_paid_{{ category.id }}" class="form-control" value="{{ category.amount }}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="id_payment_date_{{ category.id }}" class="form-label">Payment date</label>
+                                        <input type="date" name="payment_date" id="id_payment_date_{{ category.id }}" class="form-control" value="{{ now|date:'Y-m-d' }}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="id_payment_method_{{ category.id }}" class="form-label">Payment method</label>
+                                        <select name="payment_method" id="id_payment_method_{{ category.id }}" class="form-control" data-category="{{ category.id }}">
+                                            <option value="cash">Cash</option>
+                                            <option value="gcash">GCash</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 gcash-only-{{ category.id }} d-none">
+                                        <label for="id_transaction_id_{{ category.id }}" class="form-label">Transaction ID</label>
+                                        <input type="text" name="transaction_id" id="id_transaction_id_{{ category.id }}" class="form-control">
+                                    </div>
+                                    <div class="col-md-6 gcash-only-{{ category.id }} d-none">
+                                        <label for="id_gcash_account_used_{{ category.id }}" class="form-label">GCash account used</label>
+                                        <input type="text" name="gcash_account_used" id="id_gcash_account_used_{{ category.id }}" class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="id_proof_image_{{ category.id }}" class="form-label">Proof image</label>
+                                        <input type="file" name="proof_image" id="id_proof_image_{{ category.id }}" class="form-control" accept="image/*">
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="id_notes_{{ category.id }}" class="form-label">Notes</label>
+                                        <textarea name="notes" id="id_notes_{{ category.id }}" class="form-control" rows="3" placeholder="Optional payment notes"></textarea>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="record_payment" value="1" />
+                            </form>
+                            <small class="text-muted d-block mt-2">Select payment method. For GCash, provide Transaction ID and the GCash account used. You may upload a screenshot as proof.</small>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" form="recordPaymentForm-{{ category.id }}" class="btn btn-success">
+                                <i class="fas fa-check"></i> Save payment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-categories">
+                <i class="fas fa-list"></i>
+                <h6>No categories yet</h6>
+                <p>Add your first payment category to get started!</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Monthly Details Modal -->
+<div class="modal fade" id="monthlyDetailsModal" tabindex="-1" aria-labelledby="monthlyDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="monthlyDetailsModalLabel">Monthly Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="monthlyDetailsContent">
+                    <div class="text-center">
+                        <i class="fas fa-spinner fa-spin"></i> Loading monthly details...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Budget Modal -->
+<div class="modal fade" id="editBudgetModal" tabindex="-1" aria-labelledby="editBudgetModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editBudgetModalLabel">
+                    <i class="fas fa-chart-pie"></i> Edit Monthly Budget
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs mb-4" id="budgetTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="set-budget-tab" data-bs-toggle="tab" data-bs-target="#set-budget" type="button" role="tab">
+                            <i class="fas fa-edit"></i> Set Budget
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="add-budget-tab" data-bs-toggle="tab" data-bs-target="#add-budget" type="button" role="tab">
+                            <i class="fas fa-plus-circle"></i> Additional Budget
+                        </button>
+                    </li>
+                </ul>
+                
+                <div class="tab-content" id="budgetTabsContent">
+                    <div class="tab-pane fade show active" id="set-budget" role="tabpanel">
+                        <form method="post" action="{% url 'update_budget' %}" id="setBudgetForm">
+                            {% csrf_token %}
+                            <input type="hidden" name="month" id="budgetMonth">
+                            <input type="hidden" name="year" id="budgetYear">
+                            <div class="mb-3">
+                                <label for="id_total_budget" class="form-label">Monthly Budget Amount</label>
+                                <input type="number" step="0.01" min="0" name="total_budget" id="id_total_budget" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save" style="color: white;"></i> Update Budget
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="add-budget" role="tabpanel">
+                        <form method="post" action="{% url 'update_budget' %}" id="addBudgetForm">
+                            {% csrf_token %}
+                            <input type="hidden" name="add_additional_budget" value="1">
+                            <input type="hidden" name="month" id="additionalBudgetMonth">
+                            <input type="hidden" name="year" id="additionalBudgetYear">
+                            <div class="mb-3">
+                                <label for="id_amount_added" class="form-label">
+                                    <i class="fas fa-money-bill-wave"></i> Additional Budget Amount
+                                </label>
+                                <input type="number" step="0.01" min="0" name="amount_added" id="id_amount_added" class="form-control">
+                                <small class="form-text text-muted">Enter the amount you want to add to your current budget.</small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_notes" class="form-label">
+                                    <i class="fas fa-sticky-note"></i> Notes (Optional)
+                                </label>
+                                <textarea name="notes" id="id_notes" class="form-control" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-plus" style="color: white;"></i> Add to Budget
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Category Modal -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCategoryModalLabel">
+                    <i class="fas fa-plus"></i> Add New Category
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'add_category' %}" id="addCategoryForm">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="id_name" class="form-label">Category Name</label>
+                        <input type="text" name="name" id="id_name" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_amount" class="form-label">Amount</label>
+                        <input type="number" step="0.01" min="0" name="amount" id="id_amount" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_due_date" class="form-label">Due Date</label>
+                        <input type="date" name="due_date" id="id_due_date" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_category_type" class="form-label">Category Type</label>
+                        <select name="category_type" id="id_category_type" class="form-control">
+                            <option value="rent">Rent</option>
+                            <option value="internet">Internet</option>
+                            <option value="water">Water</option>
+                            <option value="electricity">Electricity</option>
+                            <option value="shopping">Shopping</option>
+                            <option value="food">Food</option>
+                            <option value="transportation">Transportation</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="health">Health</option>
+                            <option value="education">Education</option>
+                            <option value="other">Other</option>
+                            
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input type="checkbox" name="is_monthly" id="id_is_monthly" class="form-check-input">
+                            <label for="id_is_monthly" class="form-check-label">Automatically remind every month</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_description" class="form-label">Description (Optional)</label>
+                        <textarea name="description" id="id_description" class="form-control" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" form="addCategoryForm" class="btn btn-primary">
+                    <i class="fas fa-save" style="color: white;"></i> Add Category
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Category Modal -->
+<div class="modal fade" id="deleteCategoryModal" tabindex="-1" aria-labelledby="deleteCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteCategoryModalLabel">
+                    <i class="fas fa-trash"></i> Delete Category
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete the category <strong id="categoryNameToDelete"></strong>?</p>
+                <p class="text-danger"><i class="fas fa-exclamation-triangle"></i> This action will also delete all related payments and transactions. This cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form method="post" id="deleteCategoryForm" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Delete Category
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    let selectedMonth = '';
+    let selectedYear = 2025;
+
+    // Load saved month and year on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedMonth = localStorage.getItem('selectedMonth');
+        const savedYear = localStorage.getItem('selectedYear');
+        if (savedYear) {
+            selectedYear = parseInt(savedYear);
+            document.getElementById('selectedYearText').textContent = selectedYear;
+        }
+        if (savedMonth) {
+            selectedMonth = savedMonth;
+            loadMonthData(savedMonth);
+        }
+    });
+
+    function selectYear(year) {
+        selectedYear = year;
+        document.getElementById('selectedYearText').textContent = year;
+        localStorage.setItem('selectedYear', year);
+        
+        // Reload month data if a month is selected
+        if (selectedMonth) {
+            loadMonthData(selectedMonth);
+        }
+    }
+
+    function loadMonthData(month) {
+        if (!month) return;
+        
+        selectedMonth = month;
+        localStorage.setItem('selectedMonth', month);
+        
+        const monthKey = `${selectedYear}-${month.padStart(2, '0')}`;
+        
+        // Show loading state
+        document.getElementById('budgetAmount').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        document.getElementById('expenseAmount').innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        
+        // Fetch month data
+        fetch(`/month-transactions/${monthKey}/`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('budgetAmount').textContent = `₱${data.budget.toLocaleString()}`;
+                document.getElementById('expenseAmount').textContent = `₱${data.expenses.toLocaleString()}`;
+                
+                // Update the dropdown button text
+                const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                const monthName = monthNames[parseInt(month) - 1];
+                document.querySelector('.month-dropdown-btn').innerHTML = `<i class="fas fa-calendar"></i> ${monthName}`;
+            })
+            .catch(error => {
+                console.error('Error loading month data:', error);
+                document.getElementById('budgetAmount').textContent = '₱0';
+                document.getElementById('expenseAmount').textContent = '₱0';
+            });
+    }
+
+    function viewSelectedMonthTransactions() {
+        if (!selectedMonth) {
+            alert('Please select a month first.');
+            return;
+        }
+        
+        const monthKey = `${selectedYear}-${selectedMonth.padStart(2, '0')}`;
+        viewMonthTransactions(monthKey);
+    }
+
+    function viewSelectedMonthBudgetHistory() {
+        if (!selectedMonth) {
+            alert('Please select a month first.');
+            return;
+        }
+        
+        const monthKey = `${selectedYear}-${selectedMonth.padStart(2, '0')}`;
+        viewBudgetHistory(monthKey);
+    }
+
+    function viewSelectedMonthDetails() {
+        if (!selectedMonth) {
+            alert('Please select a month first.');
+            return;
+        }
+        
+        const monthKey = `${selectedYear}-${selectedMonth.padStart(2, '0')}`;
+        viewMonthDetails(monthKey);
+    }
+
+    function editSelectedMonthBudget() {
+        const modal = new bootstrap.Modal(document.getElementById('editBudgetModal'));
+        
+        // Set month and year in hidden fields
+        const month = selectedMonth || new Date().getMonth() + 1;
+        const year = selectedYear || new Date().getFullYear();
+        
+        document.getElementById('budgetMonth').value = month;
+        document.getElementById('budgetYear').value = year;
+        document.getElementById('additionalBudgetMonth').value = month;
+        document.getElementById('additionalBudgetYear').value = year;
+        
+        // Load current budget amount
+        const currentBudget = document.getElementById('budgetAmount').textContent.replace('₱', '').replace(/,/g, '');
+        document.getElementById('id_total_budget').value = currentBudget;
+        
+        modal.show();
+    }
+
+    function viewMonthDetails(monthKey) {
+        const modal = new bootstrap.Modal(document.getElementById('monthlyDetailsModal'));
+        modal.show();
+        
+        // Show loading state
+        const content = document.getElementById('monthlyDetailsContent');
+        content.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Loading monthly details...</div>';
+        
+        // Load transactions for the specific month
+        fetch(`/month-transactions/${monthKey}/`)
+            .then(response => response.json())
+            .then(data => {
+                const isGreenTheme = document.body.classList.contains('green-theme');
+                const isBlueTheme = document.body.classList.contains('blue-theme');
+                const themeColor = isGreenTheme ? '#2d8659' : isBlueTheme ? '#3182ce' : 'var(--primary-pink)';
+                const themeDarkColor = isGreenTheme ? '#1e7e5e' : isBlueTheme ? '#2b6cb0' : 'var(--dark-pink)';
+                const themeGradient = isGreenTheme ? 'linear-gradient(135deg, #2d8659, #1e7e5e)' : isBlueTheme ? 'linear-gradient(135deg, #3182ce, #2b6cb0)' : 'linear-gradient(135deg, var(--primary-pink), var(--dark-pink))';
+                
+                let html = `
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5>${data.month_name} Details</h5>
+                        <button class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i> Close
+                        </button>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="card text-center" style="background: ${themeGradient}; color: white;">
+                                <div class="card-body">
+                                    <div class="fw-bold fs-4">₱${data.budget.toLocaleString()}</div>
+                                    <small>Monthly Budget</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center bg-info">
+                                <div class="card-body">
+                                    <div class="fw-bold fs-4" style="color: white;">₱${data.expenses.toLocaleString()}</div>
+                                    <small style="color: rgba(255,255,255,0.9);">Total Expenses</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center bg-success">
+                                <div class="card-body">
+                                    <div class="fw-bold fs-4" style="color: white;">₱${(data.budget - data.expenses).toLocaleString()}</div>
+                                    <small style="color: rgba(255,255,255,0.9);">Remaining Balance</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                if (data.transactions && data.transactions.length > 0) {
+                    html += `
+                        <h6 class="mb-3">Transaction History</h6>
+                        <div class="list-group">
+                    `;
+                    
+                    data.transactions.forEach(transaction => {
+                        const amountClass = transaction.transaction_type === 'income' ? 'text-success' : 'text-danger';
+                        const badgeClass = transaction.transaction_type === 'income' ? 'bg-success' : '';
+                        const badgeStyle = transaction.transaction_type === 'income' ? '' : `style="background-color: ${themeColor}; color: white;"`;
+                        const paymentMethod = transaction.description && transaction.description.includes('GCash') ? 
+                            `<span class="badge ms-2" style="background-color: ${themeColor}; color: white;"><i class="fas fa-mobile-alt" style="color: white;"></i> GCash</span>` : 
+                            `<span class="badge ms-2" style="background-color: ${themeDarkColor}; color: white;"><i class="fas fa-money-bill" style="color: white;"></i> Cash</span>`;
+                        
+                        html += `
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1">${transaction.title}</h6>
+                                        <small class="text-muted">
+                                            <i class="fas fa-calendar"></i> ${transaction.date}
+                                            ${transaction.category ? `<i class="fas fa-tag ms-2"></i> ${transaction.category}` : ''}
+                                            ${paymentMethod}
+                                        </small>
+                                        ${transaction.description ? `<div class="mt-1"><small class="text-muted">${transaction.description}</small></div>` : ''}
+                                    </div>
+                                    <div class="text-end">
+                                        <span class="${amountClass} fw-bold">
+                                            ${transaction.transaction_type === 'income' ? '+' : '-'}₱${transaction.amount}
+                                        </span>
+                                        <br>
+                                        <span class="badge ${badgeClass}" ${badgeStyle || ''}>${transaction.transaction_type}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    html += '</div>';
+                } else {
+                    html += '<div class="text-center text-muted py-4">No transactions found for this month</div>';
+                }
+                
+                content.innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Error loading month details:', error);
+                content.innerHTML = '<div class="text-center text-danger">Error loading monthly details</div>';
+            });
+    }
+
+    // Function to view budget history for a month
+    function viewBudgetHistory(monthKey) {
+        const modal = new bootstrap.Modal(document.getElementById('monthlyDetailsModal'));
+        modal.show();
+        
+        // Show loading state
+        const content = document.getElementById('monthlyDetailsContent');
+        content.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Loading budget history...</div>';
+        
+        // Load budget history for the specific month
+        fetch(`/month-transactions/${monthKey}/`)
+            .then(response => response.json())
+            .then(data => {
+                let html = `
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5><i class="fas fa-wallet"></i> ${data.month_name} Budget History</h5>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <div class="card text-center" style="background: ${document.body.classList.contains('green-theme') ? 'linear-gradient(135deg, #2d8659, #1e7e5e)' : document.body.classList.contains('blue-theme') ? 'linear-gradient(135deg, #3182ce, #2b6cb0)' : 'linear-gradient(135deg, var(--primary-pink), var(--dark-pink))'}; color: white;">
+                                <div class="card-body">
+                                    <div class="fw-bold fs-4">₱${data.budget.toLocaleString()}</div>
+                                    <small>Total Monthly Budget</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                if (data.budget_history && data.budget_history.length > 0) {
+                    html += `
+                        <h6 class="mb-3"><i class="fas fa-history"></i> Budget Additions History</h6>
+                        <div class="list-group">
+                    `;
+                    
+                    data.budget_history.forEach((entry, index) => {
+                        html += `
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1">
+                                            <i class="fas fa-plus-circle"></i> Budget Addition #${data.budget_history.length - index}
+                                        </h6>
+                                        <small class="text-muted">
+                                            <i class="fas fa-calendar"></i> ${entry.date}
+                                        </small>
+                                        ${entry.notes && entry.notes !== 'No notes' ? `<div class="mt-1"><small class="text-muted"><i class="fas fa-sticky-note"></i> ${entry.notes}</small></div>` : ''}
+                                    </div>
+                                    <div class="text-end">
+                                        <span class="fw-bold fs-5" style="color: #38a169;">
+                                            +₱${parseFloat(entry.amount).toLocaleString()}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    html += '</div>';
+                } else {
+                    html += '<div class="text-center text-muted py-4"><i class="fas fa-info-circle"></i> No budget history found for this month</div>';
+                }
+                
+                content.innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Error loading budget history:', error);
+                content.innerHTML = '<div class="text-center text-danger">Error loading budget history</div>';
+            });
+    }
+
+    // Function to view month transactions (compatible with transactions.html)
+    function viewMonthTransactions(monthKey) {
+        const modal = new bootstrap.Modal(document.getElementById('monthlyDetailsModal'));
+        modal.show();
+        
+        // Show loading state
+        const content = document.getElementById('monthlyDetailsContent');
+        content.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Loading transactions...</div>';
+        
+        // Load transactions for the specific month
+        fetch(`/month-transactions/${monthKey}/`)
+            .then(response => response.json())
+            .then(data => {
+                const isGreenTheme = document.body.classList.contains('green-theme');
+                const isBlueTheme = document.body.classList.contains('blue-theme');
+                const themeColor = isGreenTheme ? '#2d8659' : isBlueTheme ? '#3182ce' : 'var(--primary-pink)';
+                const themeDarkColor = isGreenTheme ? '#1e7e5e' : isBlueTheme ? '#2b6cb0' : 'var(--dark-pink)';
+                
+                let html = `
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5>${data.month_name} Transactions</h5>
+                        
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <div class="fw-bold fs-4" style="color: ${themeColor};">₱${data.budget.toLocaleString()}</div>
+                                    <small class="text-muted">Monthly Budget</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <div class="text-secondary fw-bold fs-4">₱${data.expenses.toLocaleString()}</div>
+                                    <small class="text-muted">Total Expenses</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <div class="text-success fw-bold fs-4">₱${(data.budget - data.expenses).toLocaleString()}</div>
+                                    <small class="text-muted">Remaining</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                if (data.transactions && data.transactions.length > 0) {
+                    html += '<div class="list-group">';
+                    data.transactions.forEach(transaction => {
+                        const amountClass = transaction.transaction_type === 'income' ? 'text-success' : 'text-danger';
+                        const badgeClass = transaction.transaction_type === 'income' ? 'bg-success' : '';
+                        const badgeStyle = transaction.transaction_type === 'income' ? '' : `style="background-color: ${themeColor}; color: white;"`;
+                        const paymentMethod = transaction.description && transaction.description.includes('GCash') ? 
+                            `<span class="badge ms-2" style="background-color: ${themeColor}; color: white;"><i class="fas fa-mobile-alt" style="color: white;"></i> GCash</span>` : 
+                            `<span class="badge ms-2" style="background-color: ${themeDarkColor}; color: white;"><i class="fas fa-money-bill" style="color: white;"></i> Cash</span>`;
+                        
+                        html += `
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1">${transaction.title}</h6>
+                                        <small class="text-muted">
+                                            <i class="fas fa-calendar"></i> ${transaction.date}
+                                            ${transaction.category ? `<i class="fas fa-tag ms-2"></i> ${transaction.category}` : ''}
+                                            ${paymentMethod}
+                                        </small>
+                                        ${transaction.description ? `<div class="mt-1"><small class="text-muted">${transaction.description}</small></div>` : ''}
+                                    </div>
+                                    <div class="text-end">
+                                        <span class="${amountClass} fw-bold">
+                                            ${transaction.transaction_type === 'income' ? '+' : '-'}₱${transaction.amount}
+                                        </span>
+                                        <br>
+                                        <span class="badge ${badgeClass}" ${badgeStyle || ''}>${transaction.transaction_type}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    html += '</div>';
+                } else {
+                    html += '<div class="text-center text-muted py-4">No transactions found for this month</div>';
+                }
+                
+                content.innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Error loading month transactions:', error);
+                content.innerHTML = '<div class="text-center text-danger">Error loading transactions</div>';
+            });
+    }
+    
+    // Toggle GCash-only fields per modal based on method selection
+    document.addEventListener('change', function(e){
+        if (e.target && e.target.id && e.target.id.startsWith('id_payment_method_')) {
+            const select = e.target;
+            const categoryId = select.getAttribute('data-category');
+            const isGcash = select.value === 'gcash';
+            const gcashOnlyElems = document.querySelectorAll('.gcash-only-' + categoryId);
+            gcashOnlyElems.forEach(function(el){
+                if (isGcash) {
+                    el.classList.remove('d-none');
+                    const input = el.querySelector('input');
+                    if (input) input.required = true;
+                } else {
+                    el.classList.add('d-none');
+                    const input = el.querySelector('input');
+                    if (input) input.required = false;
+                }
+            });
+        }
+        
+        // Handle payment type selection
+        if (e.target && e.target.id && e.target.id.startsWith('id_payment_type_')) {
+            const select = e.target;
+            const categoryId = select.getAttribute('data-category');
+            const amountField = document.getElementById('id_amount_paid_' + categoryId);
+            const categoryAmount = parseFloat(amountField.getAttribute('max'));
+            
+            if (select.value === 'full') {
+                amountField.value = categoryAmount;
+                amountField.readOnly = true;
+            } else {
+                amountField.readOnly = false;
+                amountField.value = '';
+                amountField.focus();
+            }
+        }
+    });
+
+    // Delete category modal function
+    function openDeleteModal(categoryId, categoryName) {
+        document.getElementById('categoryNameToDelete').textContent = categoryName;
+        document.getElementById('deleteCategoryForm').action = `/category/${categoryId}/delete/`;
+        const modal = new bootstrap.Modal(document.getElementById('deleteCategoryModal'));
+        modal.show();
+    }
+
+</script>
+{% endblock %}

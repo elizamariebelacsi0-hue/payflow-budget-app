@@ -1,0 +1,35 @@
+{% extends 'budget/base.html' %}
+{% load static %}
+
+{% block title %}Our Logo - Payflow{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h2><i class="fas fa-image"></i> Logo</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-5 text-center">
+                    <img src="/media/profile_pics/logo (2) (2).png" alt="Payflow Logo" class="img-fluid" style="max-width: 300px; border-radius: 50%; box-shadow: 0 8px 16px rgba(0,0,0,0.1);">
+                </div>
+                <div class="col-md-7">
+                    <p>The logo shows a money bag surrounded by sparkles inside a circular frame. This represents financial management, clarity, and organization—exactly what PayFlow offers. The peso symbol in "PayFlow" highlights that the system is designed for Filipino users.</p>
+                    
+                    <p>Even though money is usually linked to green, I chose pink for the logo. Green and blue are very common colors for apps related to money, so using pink makes PayFlow stand out. I also chose pink because my main target users are independently living women. They usually manage many personal expenses and prefer tools that feel organized, neat, and visually appealing to their style.</p>
+                    
+                    <p>But PayFlow is not limited to women only. It is also available for families, students, and anyone who wants to manage their finances better. Because of that, I added a theme option in the system, allowing users to choose the color they prefer. This makes the system flexible and comfortable for everyone.</p>
+                    
+                    <p><strong>The tagline "All you need is in this app" sums up the purpose of PayFlow, everything you need for budgeting and tracking your money is already here.</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-3">
+        <a href="{% url 'profile' %}" class="btn btn-primary">
+            <i class="fas fa-arrow-left"></i> Back to Profile
+        </a>
+    </div>
+</div>
+{% endblock %}

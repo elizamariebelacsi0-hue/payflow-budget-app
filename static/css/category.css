@@ -1,0 +1,534 @@
+
+
+/* Blue theme theming */
+.blue-theme .card {
+    background-color: #ffffff !important;
+    color: #1a365d !important;
+    box-shadow: 0 5px 20px rgba(59, 130, 246, 0.15) !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+.blue-theme .card-header {
+    background-color: #f7fafc !important;
+    color: #1a365d !important;
+    border-bottom-color: #e2e8f0 !important;
+}
+
+.blue-theme .form-control {
+    background-color: #ffffff !important;
+    border-color: #3182ce !important;
+    color: #1a365d !important;
+}
+
+.blue-theme .form-control:focus {
+    background-color: #ffffff !important;
+    border-color: #2b6cb0 !important;
+    color: #1a365d !important;
+    box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25) !important;
+}
+
+.blue-theme .form-label {
+    color: #1a365d !important;
+}
+
+.blue-theme .btn-outline-secondary {
+    background-color: #e2e8f0 !important;
+    border-color: #cbd5e0 !important;
+    color: #1a365d !important;
+}
+
+.blue-theme .btn-outline-secondary:hover {
+    background-color: #cbd5e0 !important;
+    border-color: #a0aec0 !important;
+}
+
+.blue-theme .text-muted {
+    color: #4a5568 !important;
+}
+
+.blue-theme h5, .blue-theme h6 {
+    color: #1a365d !important;
+}
+
+.blue-theme p, .blue-theme li {
+    color: #2d3748 !important;
+}
+
+.blue-theme .category-info p {
+    color: #1a365d !important;
+}
+
+/* Green theme theming */
+.green-theme .card {
+    background-color: #ffffff !important;
+    color: #1e7e5e !important;
+    box-shadow: 0 5px 20px rgba(52, 167, 114, 0.15) !important;
+    border: 1px solid rgba(52, 167, 114, 0.12) !important;
+}
+
+.green-theme .card-header {
+    background-color: #f0f9f4 !important;
+    color: #1e7e5e !important;
+    border-bottom-color: rgba(52, 167, 114, 0.12) !important;
+}
+
+.green-theme .form-control {
+    background-color: #ffffff !important;
+    border-color: #2d8659 !important;
+    color: #1e7e5e !important;
+}
+
+.green-theme .form-control:focus {
+    background-color: #ffffff !important;
+    border-color: #34a772 !important;
+    color: #1e7e5e !important;
+    box-shadow: 0 0 0 0.2rem rgba(52, 167, 114, 0.25) !important;
+}
+
+.green-theme .form-label {
+    color: #1e7e5e !important;
+}
+
+.green-theme .btn-outline-secondary {
+    background-color: rgba(52, 167, 114, 0.12) !important;
+    border-color: rgba(52, 167, 114, 0.12) !important;
+    color: #1e7e5e !important;
+}
+
+.green-theme .btn-outline-secondary:hover {
+    background-color: rgba(52, 167, 114, 0.18) !important;
+    border-color: rgba(52, 167, 114, 0.18) !important;
+}
+
+.green-theme .text-muted {
+    color: rgba(30, 126, 94, 0.7) !important;
+}
+
+.green-theme h5, .green-theme h6 {
+    color: #1e7e5e !important;
+}
+
+.green-theme p, .green-theme li {
+    color: rgba(30, 126, 94, 0.9) !important;
+}
+
+.green-theme .category-info p {
+    color: #1e7e5e !important;
+}
+
+.green-theme .btn-danger {
+    background-color: #2d8659 !important;
+    border-color: #2d8659 !important;
+    color: #ffffff !important;
+}
+
+.green-theme .btn-danger:hover {
+    background-color: #34a772 !important;
+    border-color: #34a772 !important;
+    color: #ffffff !important;
+}
+
+.green-theme .btn-danger i {
+    color: #ffffff !important;
+}
+
+.green-theme .add-transaction-btn i {
+    color: #ffffff !important;
+}
+
+.add-transaction-btn i {
+    color: white;
+}
+
+/* Checkbox styling for "automatically remind every month" */
+.form-check-input:checked {
+    background-color: var(--primary-pink);
+    border-color: var(--primary-pink);
+}
+
+.green-theme .form-check-input:checked {
+    background-color: #2d8659;
+    border-color: #2d8659;
+}
+
+.blue-theme .form-check-input:checked {
+    background-color: #3182ce;
+    border-color: #3182ce;
+}
+
+.blue-theme .btn-danger {
+    background-color: #3182ce !important;
+    border-color: #3182ce !important;
+    color: #ffffff !important;
+}
+
+.blue-theme .btn-danger:hover {
+    background-color: #2b6cb0 !important;
+    border-color: #2b6cb0 !important;
+    color: #ffffff !important;
+}
+
+.blue-theme .btn-danger i {
+    color: #ffffff !important;
+}
+
+
+.category-detail-header {
+    background: white;
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 5px 20px rgba(249, 139, 177, 0.12);
+}
+
+.category-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.category-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--dark-pink);
+    margin-bottom: 0.5rem;
+}
+
+.category-amount {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-pink);
+}
+
+.category-meta {
+    display: flex;
+    gap: 2rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.badge.bg-success {
+    background-color: #28a745 !important;
+    color: white !important;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.payment-form-card {
+    background: white;
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 5px 20px rgba(249, 139, 177, 0.12);
+}
+
+.payments-list {
+    background: white;
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 20px rgba(249, 139, 177, 0.12);
+}
+
+.payment-item {
+    border-bottom: 1px solid #eee;
+    padding: 1rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.payment-item:last-child {
+    border-bottom: none;
+}
+
+.payment-info {
+    flex: 1;
+}
+
+.payment-amount {
+    font-weight: bold;
+    color: var(--primary-pink);
+    font-size: 1.1rem;
+}
+
+.payment-date {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.payment-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.status-paid {
+    font-size: 0.8rem;
+    color: #28a745 !important;
+}
+
+.status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-overdue {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.no-payments {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+.no-payments i {
+    font-size: 3rem;
+    color: var(--light-pink);
+    margin-bottom: 1rem;
+}
+
+.back-btn {
+    background: var(--light-pink);
+    color: var(--dark-pink);
+    border: none;
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.back-btn:hover {
+    background: var(--primary-pink);
+    color: white;
+    transform: translateY(-2px);
+}
+
+
+
+
+
+.blue-theme .category-detail-header,
+.blue-theme .payment-form-card,
+.blue-theme .payments-list {
+    background: #ffffff !important;
+    color: #1a365d !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 5px 20px rgba(59, 130, 246, 0.15) !important;
+}
+.blue-theme .category-name { color: #1a365d !important; }
+.blue-theme .category-amount { color: #3182ce !important; }
+.blue-theme .category-meta { color: #4a5568 !important; }
+.blue-theme .payment-amount { color: #1a365d !important; }
+.blue-theme .payment-date { color: #4a5568 !important; }
+.blue-theme .no-payments { color: #4a5568 !important; }
+
+.blue-theme .back-btn {
+    background: #e6f3ff !important;
+    color: #1a365d !important;
+    border: 1px solid #cbd5e0 !important;
+}
+.blue-theme .back-btn:hover {
+    background: #cfe7ff !important;
+    color: #1a365d !important;
+}
+
+.green-theme .category-detail-header,
+.green-theme .payment-form-card,
+.green-theme .payments-list {
+    background: #ffffff !important;
+    color: #1e7e5e !important;
+    border: 1px solid rgba(52, 167, 114, 0.12) !important;
+    box-shadow: 0 5px 20px rgba(52, 167, 114, 0.15) !important;
+}
+
+.green-theme .category-name {
+    color: #1e7e5e !important;
+}
+
+.green-theme .category-amount {
+    color: #2d8659 !important;
+}
+
+.green-theme .category-meta {
+    color: rgba(30, 126, 94, 0.8) !important;
+}
+
+.green-theme .payment-amount {
+    color: #2d8659 !important;
+}
+
+.green-theme .payment-date {
+    color: rgba(30, 126, 94, 0.7) !important;
+}
+
+.green-theme .no-payments {
+    color: rgba(30, 126, 94, 0.8) !important;
+}
+
+.green-theme .no-payments i {
+    color: rgba(45, 134, 89, 0.6) !important;
+}
+
+.green-theme .back-btn {
+    background: rgba(52, 167, 114, 0.1) !important;
+    color: #1e7e5e !important;
+    border: 1px solid rgba(52, 167, 114, 0.2) !important;
+}
+
+.green-theme .back-btn:hover {
+    background: #2d8659 !important;
+    color: white !important;
+    border-color: #2d8659 !important;
+}
+
+
+
+
+
+.blue-theme .category-item {
+    background-color: #ffffff !important;
+    color: #1a365d !important;
+    border-left-color: #3182ce !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+.blue-theme .category-name {
+    color: #1a365d !important;
+}
+
+.blue-theme .category-amount {
+    color: #3182ce !important;
+}
+
+.blue-theme .section-title {
+    color: #1a365d !important;
+}
+
+.blue-theme .section-title i {
+    color: #3182ce !important;
+}
+
+.blue-theme .table {
+    color: #1a365d !important;
+}
+
+.blue-theme .table th {
+    background-color: #f7fafc !important;
+    color: #1a365d !important;
+    border-color: #e2e8f0 !important;
+}
+
+.blue-theme .table td {
+    background-color: #ffffff !important;
+    color: #1a365d !important;
+    border-color: #e2e8f0 !important;
+}
+
+.blue-theme .table-hover tbody tr:hover {
+    background-color: #f7fafc !important;
+}
+
+.blue-theme .btn-outline-primary {
+    color: #3182ce !important;
+    border-color: #3182ce !important;
+}
+
+.blue-theme .btn-outline-primary:hover {
+    background-color: #3182ce !important;
+    border-color: #3182ce !important;
+    color: #ffffff !important;
+}
+
+
+.nav-tabs .nav-link {
+    color: var(--primary-pink);
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--dark-pink);
+    border-bottom-color: var(--primary-pink);
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--dark-pink);
+}
+
+.green-theme .nav-tabs .nav-link {
+    color:  #1e7e5e;
+}
+
+.green-theme .nav-tabs .nav-link.active {
+    color:  #1e7e5e;
+    border-bottom-color: #1e7e5e;
+}
+
+.green-theme .nav-tabs .nav-link:hover {
+    color:  #1e7e5e;
+}
+
+.blue-theme .nav-tabs .nav-link {
+    color: #3182ce;
+}
+
+.blue-theme .nav-tabs .nav-link.active {
+    color: #3182ce;
+    border-bottom-color: #3182ce;
+}
+
+.blue-theme .nav-tabs .nav-link:hover {
+    color: #3182ce;
+}
+
+
+
+.category-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+
+.category-info .category-item {
+    margin: 0;
+    flex: 1 1 0;
+    min-width: 0;
+    font-size: 1rem;
+}
+
+
+.category-info .amount { text-align: left; }
+.category-info .due    { text-align: center; }
+.category-info .type   { text-align: right; }
+
+
+.category-info .category-item strong {
+    font-weight: 700;
+    margin-right: 0.4rem;
+}
+
+
+@media (max-width: 576px) {
+    .category-info {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: left;
+    }
+    .category-info .amount,
+    .category-info .due,
+    .category-info .type {
+        text-align: left;
+        padding: 0.25rem 0;
+    }
+}

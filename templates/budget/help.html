@@ -1,0 +1,46 @@
+{% extends 'budget/base.html' %}
+{% load static %}
+
+{% block title %}Help - Payflow{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/category.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h4><i class="fas fa-question-circle"></i> Help & Support</h4>
+            <a href="{% url 'profile' %}" class="btn btn-outline-secondary btn-sm">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+        </div>
+        <div class="card-body">
+            <h5>How to use Payflow</h5>
+            <p>Payflow is your personal budget management and bill reminder app. Here's how to get started:</p>
+            
+            <h6>1. Adding Categories</h6>
+            <p>Create payment categories for your bills like rent, utilities, internet, etc. Each category includes the amount and due date.</p>
+            
+            <h6>2. Recording Payments</h6>
+            <p>When you make a payment, record it in the category detail page. This helps track your payment history.</p>
+            
+            <h6>3. Setting Budget</h6>
+            <p>Set your monthly budget to track your spending and stay within your financial limits.</p>
+            
+            <h6>4. Notifications</h6>
+            <p>The app will notify you 1-2 days before payments are due to help you stay on top of your bills.</p>
+            
+            <h5>Features</h5>
+            <ul>
+                <li>Budget tracking and management</li>
+                <li>Bill reminders and notifications</li>
+                <li>Payment history and transaction records</li>
+                <li>Category-based organization</li>
+                <li>Personal profile management</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %} 

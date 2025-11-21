@@ -1,0 +1,352 @@
+{% extends base_template %}
+{% load crispy_forms_tags %}
+
+{% block title %}Profile - Payflow{% endblock %}
+
+{% block extra_css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Profile Header -->
+    <div class="profile-header">
+        {% if profile.profile_picture %}
+            <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="profile-picture">
+        {% else %}
+            <div class="profile-picture d-flex align-items-center justify-content-center" style="background: var(--light-pink); margin: 0 auto 1rem auto; display: block;">
+                <i class="fas fa-user" style="font-size: 3rem; color: white;"></i>
+            </div>
+        {% endif %}
+        <h3 class="profile-name">{{ user.first_name }} {{ user.last_name }}</h3>
+        <p class="profile-email">{{ user.email }}</p>
+    </div>
+    
+    <!-- Personal Information -->
+    <div class="profile-section">
+        <h5 class="section-title">
+            <i class="fas fa-user"></i> Personal Information
+        </h5>
+        
+        <!-- Display Current Information -->
+        <div class="info-display mb-4">
+            <div class="info-item">
+                <span class="info-label">Username</span>
+                <span class="info-value">{{ user.username }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Email</span>
+                <span class="info-value">{{ user.email }}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Phone Number</span>
+                <span class="info-value">
+                    {% if profile.phone_number %}
+                        {{ profile.phone_number }}
+                    {% else %}
+                        <span class="text-muted">Not provided</span>
+                    {% endif %}
+                </span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Birth Date</span>
+                <span class="info-value">
+                    {% if profile.birth_date %}
+                        {{ profile.birth_date|date:"F d, Y" }}
+                    {% else %}
+                        <span class="text-muted">Not provided</span>
+                    {% endif %}
+                </span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Address</span>
+                <span class="info-value">
+                    {% if profile.address %}
+                        {{ profile.address }}
+                    {% else %}
+                        <span class="text-muted">Not provided</span>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+        
+        <!-- Edit Profile Section -->
+        <div class="edit-section mt-4">
+            <button class="btn btn-outline-primary edit-toggle-btn" type="button" data-bs-toggle="collapse" data-bs-target="#editProfileForm" aria-expanded="false" aria-controls="editProfileForm">
+                <i class="fas fa-edit"></i> Edit Profile Information
+                <i class="fas fa-chevron-down ms-2"></i>
+            </button>
+        </div>
+        
+        <div class="collapse" id="editProfileForm">
+            <form method="post" enctype="multipart/form-data" class="mt-3">
+            {% csrf_token %}
+            
+            <!-- Username -->
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+                {{ form.username }}
+            </div>
+            
+            <!-- Email -->
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+                {{ form.email }}
+            </div>
+            
+            <!-- First Name -->
+            <div class="form-group">
+                <label for="{{ form.first_name.id_for_label }}" class="form-label">First Name</label>
+                {{ form.first_name }}
+            </div>
+            
+            <!-- Last Name -->
+            <div class="form-group">
+                <label for="{{ form.last_name.id_for_label }}" class="form-label">Last Name</label>
+                {{ form.last_name }}
+            </div>
+            
+            <!-- Profile Picture -->
+            <div class="form-group">
+                <label for="{{ form.profile_picture.id_for_label }}" class="form-label">Profile Picture</label>
+                <div class="profile-picture-input">
+                    <label for="{{ form.profile_picture.id_for_label }}" class="profile-picture-label">
+                        <i class="fas fa-camera"></i> Choose New Picture
+                    </label>
+                    {{ form.profile_picture }}
+                    {% if profile.profile_picture %}
+                        <div class="current-picture-info">
+                            <i class="fas fa-info-circle"></i> Current: {{ profile.profile_picture.name|slice:"13:" }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Phone Number -->
+            <div class="form-group">
+                <label for="{{ form.phone_number.id_for_label }}" class="form-label">Phone Number</label>
+                {{ form.phone_number }}
+            </div>
+            
+            <!-- Birth Date -->
+            <div class="form-group">
+                <label for="{{ form.birth_date.id_for_label }}" class="form-label">Birth Date</label>
+                {{ form.birth_date }}
+            </div>
+            
+            <!-- Address -->
+            <div class="form-group">
+                <label for="{{ form.address.id_for_label }}" class="form-label">Address</label>
+                {{ form.address }}
+            </div>
+            
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"style="color: white;"></i> Update Profile
+            </button>
+        </form>
+        </div>
+    </div>
+    
+    <!-- Theme Settings -->
+    <div class="profile-section">
+        <h5 class="section-title">
+            <i class="fas fa-palette"></i> Theme
+        </h5>
+        
+     
+        <div class="info-item">
+            <span class="info-label">Blue Theme</span>
+            <div class="blue-theme-toggle">
+                <label class="switch">
+                    <input type="checkbox" id="blueThemeToggle" onchange="toggleBlueTheme()">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Green Theme</span>
+            <div class="green-theme-toggle">
+                <label class="switch">
+                    <input type="checkbox" id="greenThemeToggle" onchange="toggleGreenTheme()">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <p class="text-muted" style="font-size: 0.9rem; margin-top: 0.5rem;">
+            <i class="fas fa-info-circle"></i> Choose your preferred theme style
+        </p>
+    </div>
+    
+    <!-- Login & Security -->
+    <div class="profile-section">
+        <h5 class="section-title">
+            <i class="fas fa-shield-alt"></i> Login & Security
+        </h5>
+        <div class="info-item">
+            <span class="info-label">Username</span>
+            <span class="info-value">{{ user.username }}</span>
+        </div>
+                <div class="info-item">
+            <span class="info-label">Password</span>
+            <span class="info-value">••••••••</span>
+        </div>
+    </div>
+    
+    {% if not user.is_staff %}
+    <!-- Help -->
+    <div class="profile-section">
+        <h5 class="section-title">
+            <i class="fas fa-question-circle"></i> About
+        </h5>
+        <a href="{% url 'help' %}" class="action-btn">
+            <i class="fas fa-info-circle"></i> How to use Payflow
+        </a>
+        <a href="{% url 'help' %}" class="action-btn">
+            <i class="fas fa-cog"></i> App Features
+        </a>
+    </div>
+    
+    <!-- Logo & Ads Corner -->
+    <div class="profile-section">
+        <h5 class="section-title">
+            <i class="fas fa-bullhorn"></i> Logo & Ads Corner
+        </h5>
+        <div class="media-links-vertical">
+            <div class="mb-3">
+                <a href="{% url 'logo_page' %}" class="media-link" style="color: #666;">Logo</a>
+
+            </div>
+            <div class="mb-3">
+                <a href="{% url 'poster_page' %}" class="media-link" style="color: #666;">Poster</a>
+            </div>
+            <div class="mb-3">
+                <a href="{% url 'advertisement_page' %}" class="media-link" style="color: #666;">Advertisement</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Account Actions -->
+    <div class="profile-section">
+        <h5 class="section-title">
+            <i class="fas fa-cog"></i> Account Actions
+        </h5>
+        <a href="{% url 'close_account' %}" class="action-btn danger">
+            <i class="fas fa-trash"></i> Close Account
+        </a>
+    </div>
+    
+    <!-- Logout -->
+    <div class="text-center">
+        <button class="btn logout-btn" onclick="showLogoutConfirmation()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+    </div>
+</div>
+
+<!-- Logout Confirmation Modal -->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="logoutModalLabel">
+                    <i class="fas fa-sign-out-alt"></i> Confirm Logout
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <i class="fas fa-question-circle fa-3x theme-color mb-3"></i>
+                <p>Are you sure you want to logout from your account?</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <a href="{% url 'login' %}" class="btn btn-danger">Yes</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function toggleLogo() {
+    const logoDisplay = document.getElementById('logoDisplay');
+    logoDisplay.style.display = logoDisplay.style.display === 'none' ? 'block' : 'none';
+}
+
+function togglePoster() {
+    const posterDisplay = document.getElementById('posterDisplay');
+    posterDisplay.style.display = posterDisplay.style.display === 'none' ? 'block' : 'none';
+}
+
+function toggleAdvertisement() {
+    const adDisplay = document.getElementById('adDisplay');
+    adDisplay.style.display = adDisplay.style.display === 'none' ? 'block' : 'none';
+}
+
+function toggleBlueTheme() {
+    const body = document.body;
+    const blueToggle = document.getElementById('blueThemeToggle');
+    const greenToggle = document.getElementById('greenThemeToggle');
+    
+    if (blueToggle.checked) {
+        body.classList.remove('green-theme');
+        body.classList.add('blue-theme');
+        localStorage.setItem('selectedTheme', 'blue');
+        if (greenToggle) greenToggle.checked = false;
+    } else {
+        body.classList.remove('blue-theme');
+        localStorage.setItem('selectedTheme', 'pink');
+    }
+}
+
+function toggleGreenTheme() {
+    const body = document.body;
+    const greenToggle = document.getElementById('greenThemeToggle');
+    const blueToggle = document.getElementById('blueThemeToggle');
+    
+    if (greenToggle.checked) {
+        body.classList.remove('blue-theme');
+        body.classList.add('green-theme');
+        localStorage.setItem('selectedTheme', 'green');
+        if (blueToggle) blueToggle.checked = false;
+    } else {
+        body.classList.remove('green-theme');
+        localStorage.setItem('selectedTheme', 'pink');
+    }
+}
+
+// Load theme preferences on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const blueThemeToggle = document.getElementById('blueThemeToggle');
+    const greenThemeToggle = document.getElementById('greenThemeToggle');
+    const savedTheme = localStorage.getItem('selectedTheme') || 'pink';
+    
+    if (savedTheme === 'blue') {
+        document.body.classList.add('blue-theme');
+        if (blueThemeToggle) blueThemeToggle.checked = true;
+    } else if (savedTheme === 'green') {
+        document.body.classList.add('green-theme');
+        if (greenThemeToggle) greenThemeToggle.checked = true;
+    }
+    
+    // Handle edit profile dropdown toggle
+    const editToggleBtn = document.querySelector('.edit-toggle-btn');
+    if (editToggleBtn) {
+        editToggleBtn.addEventListener('click', function() {
+            const chevronIcon = this.querySelector('.fa-chevron-down');
+            if (chevronIcon) {
+                // The rotation is handled by CSS based on aria-expanded
+                // This ensures smooth animation
+            }
+        });
+    }
+});
+
+function showLogoutConfirmation() {
+    const modal = new bootstrap.Modal(document.getElementById('logoutModal'));
+    modal.show();
+}
+</script>
+{% endblock %} 
