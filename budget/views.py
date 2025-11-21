@@ -125,7 +125,20 @@ def admin_dashboard(request):
     if not request.user.is_staff:
         return redirect('home')
     users = User.objects.all().order_by('-date_joined')
-    return render(request, 'budget/admin_dashboard.html', {'users': users})
+    
+    # Get user profiles for profile pictures
+    users_with_profiles = []
+    for user in users:
+        try:
+            profile = user.userprofile
+        except UserProfile.DoesNotExist:
+            profile = None
+        users_with_profiles.append({
+            'user': user,
+            'profile': profile
+        })
+    
+    return render(request, 'budget/admin_dashboard.html', {'users_with_profiles': users_with_profiles})
 
 @login_required
 @redirect_staff_to_admin

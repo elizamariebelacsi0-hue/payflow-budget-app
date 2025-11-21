@@ -149,8 +149,18 @@
         
         // Apply saved theme on page load
         document.addEventListener('DOMContentLoaded', function() {
-            const savedTheme = localStorage.getItem('selectedTheme') || 'pink';
-            applyTheme(savedTheme);
+            // Apply saved theme from localStorage
+            const darkMode = localStorage.getItem('darkMode');
+            const blueTheme = localStorage.getItem('blueTheme');
+            const greenTheme = localStorage.getItem('greenTheme');
+            
+            if (darkMode === 'enabled') {
+                document.body.classList.add('dark-mode');
+            } else if (blueTheme === 'enabled') {
+                document.body.classList.add('blue-theme');
+            } else if (greenTheme === 'enabled') {
+                document.body.classList.add('green-theme');
+            }
         });
         let adminSearchTimeout;
         

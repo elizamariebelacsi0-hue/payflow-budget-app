@@ -33,22 +33,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for user in users %}
+                    {% for user_data in users_with_profiles %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td>
                             <div class="user-profile-pic">
-                                <i class="fas fa-user-circle"></i>
+                                {% if user_data.profile and user_data.profile.profile_picture %}
+                                    <img src="{{ user_data.profile.profile_picture.url }}" alt="Profile" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;">
+                                {% else %}
+                                    <i class="fas fa-user-circle"></i>
+                                {% endif %}
                             </div>
                         </td>
-                        <td class="text-capitalize">{{ user.username }}</td>
-                        <td>{{ user.first_name|default:"—" }}</td>
-                        <td>{{ user.last_name|default:"—" }}</td>
+                        <td class="text-capitalize">{{ user_data.user.username }}</td>
+                        <td>{{ user_data.user.first_name|default:"—" }}</td>
+                        <td>{{ user_data.user.last_name|default:"—" }}</td>
                         <td>
                             <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap">
-                                <span>{{ user.date_joined|date:"M d, Y · h:i A" }}</span>
-                                <span class="role-badge {% if user.is_staff %}role-admin{% else %}role-user{% endif %}">
-                                    {% if user.is_staff %}Admin{% else %}User{% endif %}
+                                <span>{{ user_data.user.date_joined|date:"M d, Y · h:i A" }}</span>
+                                <span class="role-badge {% if user_data.user.is_staff %}role-admin{% else %}role-user{% endif %}">
+                                    {% if user_data.user.is_staff %}Admin{% else %}User{% endif %}
                                 </span>
                             </div>
                         </td>

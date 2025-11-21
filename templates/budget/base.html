@@ -370,8 +370,28 @@
             }
         }
         
-        // Auto-hide notifications after 5 seconds
+        // Load saved theme on page load
         document.addEventListener('DOMContentLoaded', function() {
+            // Apply saved theme
+            const darkMode = localStorage.getItem('darkMode');
+            const blueTheme = localStorage.getItem('blueTheme');
+            const greenTheme = localStorage.getItem('greenTheme');
+            
+            if (darkMode === 'enabled') {
+                document.body.classList.add('dark-mode');
+                const toggle = document.getElementById('darkModeToggle');
+                if (toggle) toggle.checked = true;
+            } else if (blueTheme === 'enabled') {
+                document.body.classList.add('blue-theme');
+                const toggle = document.getElementById('blueThemeToggle');
+                if (toggle) toggle.checked = true;
+            } else if (greenTheme === 'enabled') {
+                document.body.classList.add('green-theme');
+                const toggle = document.getElementById('greenThemeToggle');
+                if (toggle) toggle.checked = true;
+            }
+            
+            // Auto-hide notifications after 5 seconds
             const alerts = document.querySelectorAll('.alert');
             alerts.forEach(function(alert) {
                 // Check for payment messages
