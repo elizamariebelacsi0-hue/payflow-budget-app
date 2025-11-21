@@ -27,6 +27,10 @@ urlpatterns = [
     path('search-suggestions/', views.search_suggestions, name='search_suggestions'),
     path('search/', views.search_results, name='search_results'),
     path('admin-search-suggestions/', views.admin_search_suggestions, name='admin_search_suggestions'),
+    # SEO and Google verification
+    path('google2a6ee76082d4d9c7.html', views.google_verification, name='google_verification'),
+    path('sitemap.xml', views.sitemap, name='sitemap'),
+    path('robots.txt', views.robots_txt, name='robots_txt'),
     # Removed legacy GCash payment routes in favor of unified Record Payment modal
 ] 
 

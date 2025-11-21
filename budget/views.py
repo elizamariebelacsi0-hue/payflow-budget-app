@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.utils import timezone
 from django.db.models import Sum, Q
 from django.db import models
@@ -1006,3 +1006,41 @@ def get_notifications_context(request):
         
         return {'due_soon': due_soon}
     return {'due_soon': []}
+
+def google_verification(request):
+    """Google Search Console verification file"""
+    return HttpResponse('google-site-verification: google2a6ee76082d4d9c7.html', content_type='text/html')
+
+def sitemap(request):
+    """Sitemap for SEO"""
+    sitemap_content = '''<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://payflow-budget-app.onrender.com/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://payflow-budget-app.onrender.com/register/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://payflow-budget-app.onrender.com/login/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+</urlset>'''
+    return HttpResponse(sitemap_content, content_type='application/xml')
+
+def robots_txt(request):
+    """Robots.txt for SEO"""
+    robots_content = '''User-agent: *
+Allow: /
+Allow: /register/
+Allow: /login/
+Disallow: /admin/
+Disallow: /profile/
+Disallow: /category/
+Sitemap: https://payflow-budget-app.onrender.com/sitemap.xml'''
+    return HttpResponse(robots_content, content_type='text/plain')
