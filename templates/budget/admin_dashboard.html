@@ -20,11 +20,12 @@
             </span>
         </div>
 
-        <div class="table-responsive">
+        <div class="table-responsive admin-table-container">
             <table class="table admin-table align-middle">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Profile</th>
                         <th scope="col">Username</th>
                         <th scope="col">First Name</th>
                         <th scope="col">Last Name</th>
@@ -35,6 +36,11 @@
                     {% for user in users %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
+                        <td>
+                            <div class="user-profile-pic">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                        </td>
                         <td class="text-capitalize">{{ user.username }}</td>
                         <td>{{ user.first_name|default:"—" }}</td>
                         <td>{{ user.last_name|default:"—" }}</td>
