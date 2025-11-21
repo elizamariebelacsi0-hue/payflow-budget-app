@@ -291,13 +291,15 @@ function toggleBlueTheme() {
     const greenToggle = document.getElementById('greenThemeToggle');
     
     if (blueToggle.checked) {
-        body.classList.remove('green-theme');
+        body.classList.remove('green-theme', 'dark-mode');
         body.classList.add('blue-theme');
-        localStorage.setItem('selectedTheme', 'blue');
+        localStorage.setItem('blueTheme', 'enabled');
+        localStorage.setItem('greenTheme', 'disabled');
+        localStorage.setItem('darkMode', 'disabled');
         if (greenToggle) greenToggle.checked = false;
     } else {
         body.classList.remove('blue-theme');
-        localStorage.setItem('selectedTheme', 'pink');
+        localStorage.setItem('blueTheme', 'disabled');
     }
 }
 
@@ -307,13 +309,15 @@ function toggleGreenTheme() {
     const blueToggle = document.getElementById('blueThemeToggle');
     
     if (greenToggle.checked) {
-        body.classList.remove('blue-theme');
+        body.classList.remove('blue-theme', 'dark-mode');
         body.classList.add('green-theme');
-        localStorage.setItem('selectedTheme', 'green');
+        localStorage.setItem('greenTheme', 'enabled');
+        localStorage.setItem('blueTheme', 'disabled');
+        localStorage.setItem('darkMode', 'disabled');
         if (blueToggle) blueToggle.checked = false;
     } else {
         body.classList.remove('green-theme');
-        localStorage.setItem('selectedTheme', 'pink');
+        localStorage.setItem('greenTheme', 'disabled');
     }
 }
 
@@ -321,12 +325,14 @@ function toggleGreenTheme() {
 document.addEventListener('DOMContentLoaded', function() {
     const blueThemeToggle = document.getElementById('blueThemeToggle');
     const greenThemeToggle = document.getElementById('greenThemeToggle');
-    const savedTheme = localStorage.getItem('selectedTheme') || 'pink';
     
-    if (savedTheme === 'blue') {
+    const blueTheme = localStorage.getItem('blueTheme');
+    const greenTheme = localStorage.getItem('greenTheme');
+    
+    if (blueTheme === 'enabled') {
         document.body.classList.add('blue-theme');
         if (blueThemeToggle) blueThemeToggle.checked = true;
-    } else if (savedTheme === 'green') {
+    } else if (greenTheme === 'enabled') {
         document.body.classList.add('green-theme');
         if (greenThemeToggle) greenThemeToggle.checked = true;
     }
