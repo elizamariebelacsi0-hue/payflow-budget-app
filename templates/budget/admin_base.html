@@ -19,6 +19,22 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
+    <script>
+        // Load theme immediately to prevent flash
+        (function() {
+            const darkMode = localStorage.getItem('darkMode');
+            const blueTheme = localStorage.getItem('blueTheme');
+            const greenTheme = localStorage.getItem('greenTheme');
+            
+            if (darkMode === 'enabled') {
+                document.body.classList.add('dark-mode');
+            } else if (blueTheme === 'enabled') {
+                document.body.classList.add('blue-theme');
+            } else if (greenTheme === 'enabled') {
+                document.body.classList.add('green-theme');
+            }
+        })();
+    </script>
     {% if user.is_authenticated %}
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container d-flex justify-content-between align-items-center">

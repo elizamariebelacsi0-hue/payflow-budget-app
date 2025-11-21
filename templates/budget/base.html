@@ -64,6 +64,22 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
+    <script>
+        // Load theme immediately to prevent flash
+        (function() {
+            const darkMode = localStorage.getItem('darkMode');
+            const blueTheme = localStorage.getItem('blueTheme');
+            const greenTheme = localStorage.getItem('greenTheme');
+            
+            if (darkMode === 'enabled') {
+                document.body.classList.add('dark-mode');
+            } else if (blueTheme === 'enabled') {
+                document.body.classList.add('blue-theme');
+            } else if (greenTheme === 'enabled') {
+                document.body.classList.add('green-theme');
+            }
+        })();
+    </script>
     {% if user.is_authenticated %}
     <!-- Top Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark">
@@ -457,24 +473,7 @@
                 });
             }
             
-            // Load theme preferences on all pages
-            const savedDarkMode = localStorage.getItem('darkMode');
-            const savedBlueTheme = localStorage.getItem('blueTheme');
-            const savedGreenTheme = localStorage.getItem('greenTheme');
-            
-            if (savedDarkMode === 'enabled') {
-                document.body.classList.add('dark-mode');
-                const darkModeToggle = document.getElementById('darkModeToggle');
-                if (darkModeToggle) darkModeToggle.checked = true;
-            } else if (savedBlueTheme === 'enabled') {
-                document.body.classList.add('blue-theme');
-                const blueThemeToggle = document.getElementById('blueThemeToggle');
-                if (blueThemeToggle) blueThemeToggle.checked = true;
-            } else if (savedGreenTheme === 'enabled') {
-                document.body.classList.add('green-theme');
-                const greenThemeToggle = document.getElementById('greenThemeToggle');
-                if (greenThemeToggle) greenThemeToggle.checked = true;
-            }
+
             
             
             // Load recent searches from localStorage
