@@ -55,7 +55,7 @@ class UserProfileForm(forms.ModelForm):
     
     class Meta:
         model = UserProfile
-        fields = ['birth_date', 'address', 'phone_number']
+        fields = ['profile_picture', 'birth_date', 'address', 'phone_number']
         widgets = {
             'birth_date': forms.DateInput(attrs={
                 'type': 'date',
@@ -69,6 +69,10 @@ class UserProfileForm(forms.ModelForm):
             'phone_number': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter your phone number'
+            }),
+            'profile_picture': forms.FileInput(attrs={
+                'class': 'form-control',
+                'accept': 'image/*'
             }),
 
         }
@@ -128,7 +132,7 @@ class CategoryEditForm(forms.ModelForm):
 class PaymentForm(forms.ModelForm):
     class Meta:
         model = Payment
-        fields = ['payment_type', 'amount_paid', 'payment_date', 'payment_method', 'transaction_id', 'gcash_account_used', 'notes']
+        fields = ['payment_type', 'amount_paid', 'payment_date', 'payment_method', 'transaction_id', 'gcash_account_used', 'proof_image', 'notes']
         widgets = {
             'payment_type': forms.Select(attrs={'class': 'form-control'}),
             'payment_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
@@ -137,6 +141,7 @@ class PaymentForm(forms.ModelForm):
             'transaction_id': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'e.g., GCash Ref No.'}),
             'gcash_account_used': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'GCash account number used'}),
 
+            'proof_image': forms.FileInput(attrs={'class': 'form-control', 'accept': 'image/*'}),
             'notes': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Optional payment notes'}),
         }
 

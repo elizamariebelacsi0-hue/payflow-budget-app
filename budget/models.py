@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
+    profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     address = models.TextField(blank=True)
     phone_number = models.CharField(max_length=15, blank=True)
@@ -158,7 +158,7 @@ class Payment(models.Model):
     payment_type = models.CharField(max_length=10, choices=PAYMENT_TYPE_CHOICES, default='full')
     transaction_id = models.CharField(max_length=100, blank=True)
     gcash_account_used = models.CharField(max_length=20, blank=True)
-    # proof_image = models.ImageField(upload_to='payment_proofs/', null=True, blank=True)
+    proof_image = models.ImageField(upload_to='payment_proofs/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
