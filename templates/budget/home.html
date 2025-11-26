@@ -120,7 +120,7 @@
         <div class="section-header">
             <h5 class="section-title">Payment Categories</h5>
             <div class="header-buttons">
-                <button class="btn add-category-btn" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                <button class="btn add-category-btn" onclick="checkBeforeAddCategory()">
                     <i class=""></i> Add Category
                 </button>
             </div>
@@ -883,5 +883,70 @@
         modal.show();
     }
 
+    function checkBeforeAddCategory() {
+        if (!selectedMonth) {
+            const modal = new bootstrap.Modal(document.getElementById('selectMonthModal'));
+            modal.show();
+            return;
+        }
+        
+        const budgetAmount = document.getElementById('budgetAmount').textContent.replace('₱', '').replace(/,/g, '');
+        if (budgetAmount === '0' || budgetAmount === '') {
+            const modal = new bootstrap.Modal(document.getElementById('addBudgetModal'));
+            modal.show();
+            return;
+        }
+        
+        const addCategoryModal = new bootstrap.Modal(document.getElementById('addCategoryModal'));
+        addCategoryModal.show();
+    }
+
 </script>
 {% endblock %}
+
+<!-- Select Month Modal -->
+<div class="modal fade" id="selectMonthModal" tabindex="-1" aria-labelledby="selectMonthModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title" id="selectMonthModalLabel">
+                    <i class="fas fa-calendar"></i> Select a Month First
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center py-4">
+                <i class="fas fa-calendar-alt" style="font-size: 3rem; color: #ffc107; margin-bottom: 1rem;"></i>
+                <h6 class="mt-3">Please select a month first</h6>
+                <p class="text-muted">You need to select a month from the Date dropdown before adding a category.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Budget Modal -->
+<div class="modal fade" id="addBudgetModal" tabindex="-1" aria-labelledby="addBudgetModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title" id="addBudgetModalLabel">
+                    <i class="fas fa-wallet"></i> Add Monthly Budget First
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center py-4">
+                <i class="fas fa-money-bill-wave" style="font-size: 3rem; color: #dc3545; margin-bottom: 1rem;"></i>
+                <h6 class="mt-3">No monthly budget set</h6>
+                <p class="text-muted">You need to set a monthly budget before adding payment categories.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="editSelectedMonthBudget()">
+                    <i class="fas fa-plus"></i> Add Budget
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

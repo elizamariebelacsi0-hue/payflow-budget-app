@@ -238,6 +238,16 @@ def category_detail(request, category_id):
 @redirect_staff_to_admin
 def add_category(request):
     if request.method == 'POST':
+        current_month = timezone.now().date().replace(day=1)
+        budget_exists = MonthlyBudget.objects.filter(
+            user=request.user,
+            month=current_month
+        ).exists()
+        
+        if not budget_exists:
+            messages.error(request, 'BUDGET_REQUIRED')
+            return redirect('home')
+        
         form = CategoryForm(request.POST)
         if form.is_valid():
             category = form.save(commit=False)
@@ -246,7 +256,6 @@ def add_category(request):
             messages.success(request, 'Category added successfully!')
             return redirect('home')
         else:
-            # Handle form errors
             for field, errors in form.errors.items():
                 for error in errors:
                     messages.error(request, f'{field}: {error}')
